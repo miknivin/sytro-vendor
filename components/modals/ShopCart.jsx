@@ -1,0 +1,818 @@
+"use client";
+import { useContextElement } from "@/context/Context";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Rupee from "@/utlis/Rupeesvg";
+import {
+  removeCartItem,
+  removeCartItemUploadedImage,
+  updateCartItem,
+} from "@/store/slices/cartSlice";
+import { resetSingleProduct } from "@/store/slices/productSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter, usePathname } from "next/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import {
+  faCircleChevronLeft,
+  faCircleChevronRight,
+  faTrash,
+  faTimes,
+  faEdit,
+} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-hot-toast";
+import { useUploadKidsImageMutation } from "@/store/api/orderApi";
+import { getPresignedUrls } from "@/functions/action";
+import {
+  useAbortMultipartUploadMutation,
+  useCompleteMultipartUploadMutation,
+  useInitiateMultipartUploadMutation,
+} from "@/store/api/multipartApi";
+import { uploadMultipartFile } from "@/utlis/uploadMultipart";
+
+export default function ShopCart() {
+  const [showPopover, setShowPopover] = useState(false);
+  // const [editStates, setEditStates] = useState({});
+  const [uploadKidsImage, { isLoading, error }] = useUploadKidsImageMutation();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [imageUrl, setImageUrl] = useState("");
+  const modalRef = useRef(null);
+  const dispatch = useDispatch();
+  const { cartProducts, setCartProducts } = useContextElement();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const [subtotal, setSubtotal] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [popoverStates, setPopoverStates] = useState({});
+  const [imageUrls, setImageUrls] = useState({});
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const fileInputRefs = useRef({});
+  const nameInputRefs = useRef({});
+  const [initiateMultipartUpload] = useInitiateMultipartUploadMutation();
+  const [completeMultipartUpload] = useCompleteMultipartUploadMutation();
+  const [abortMultipartUpload] = useAbortMultipartUploadMutation();
+  const [nameErrorMessage, setNameErrorMessage] = useState(null);
+  const [showUploadInput, setShowUploadInput] = useState({});
+
+  const handlePopoverToggle = (productId, uploadedImage) => {
+    setPopoverStates((prev) => ({
+      ...prev,
+      [productId]: !prev[productId],
+    }));
+    setImageUrls((prev) => ({
+      ...prev,
+      [productId]: Array.isArray(uploadedImage)
+        ? uploadedImage
+        : uploadedImage
+          ? [uploadedImage]
+          : [],
+    }));
+  };
+
+  // const handleEditToggle = (productId) => {
+  //   setEditStates((prev) => ({
+  //     ...prev,
+  //     [productId]: !prev[productId],
+  //   }));
+  //   // Auto-focus the input field when enabling edit mode
+  //   if (!editStates[productId]) {
+  //     setTimeout(() => {
+  //       nameInputRefs.current[productId]?.focus();
+  //     }, 0);
+  //   }
+  // };
+
+  const handleClosePopover = (productId) => {
+    setPopoverStates((prev) => ({
+      ...prev,
+      [productId]: false,
+    }));
+  };
+
+  const handleClick = () => {
+    if (isQuantityValid()) {
+      if (isAuthenticated) {
+        router.push("/checkout", { scroll: false });
+      } else {
+        router.push(`${window.location.pathname}?toCheckout=proceeding`, {
+          scroll: false,
+        });
+      }
+    } else {
+      const mismatchedItems = cartItems.filter(
+        (item) =>
+          item.category === "Kids Bags" &&
+          (imageUrls[item.product]?.length || 0) === 0,
+      );
+      const productNames = mismatchedItems.map((item) => item.name).join(", ");
+      toast.error(
+        `Please upload at least one image for these Kids Bags products: ${productNames}`,
+      );
+
+      console.log("Mismatched items:", mismatchedItems);
+    }
+  };
+
+  const isQuantityValid = () => {
+    if (cartItems.length === 0) return false;
+    return cartItems.every((item) => {
+      if (item.category !== "Kids Bags") return true;
+      const imageCount = imageUrls[item.product]?.length || 0;
+      return imageCount >= 1;
+    });
+  };
+
+  const handleRemoveImage = (productId, cartItem, imageIndex) => {
+    dispatch(
+      removeCartItemUploadedImage({
+        productId,
+        imageIndex,
+      }),
+    );
+    decreaseQuantity(cartItem, productId);
+  };
+
+  const handleNameChange = (productId, newName) => {
+    dispatch(
+      updateCartItem({
+        product: productId,
+        customNameToPrint: newName,
+      }),
+    );
+  };
+
+  useEffect(() => {
+    const updatedImageUrls = {};
+    cartItems.forEach((item) => {
+      if (item.category === "Kids Bags") {
+        updatedImageUrls[item.product] = item.uploadedImage || [];
+      }
+    });
+    setImageUrls(updatedImageUrls);
+  }, [cartItems]);
+
+  const isShopCollectionSub = pathname?.includes("/shop-collection-sub");
+
+  useEffect(() => {
+    const newSubtotal = cartItems.reduce((total, item) => {
+      const price = Number(item.price) || 0;
+      const quantity = Number(item.quantity) || 0;
+      return total + price * quantity;
+    }, 0);
+    setSubtotal(newSubtotal);
+  }, [cartItems]);
+
+  const handleNavigation = (e) => {
+    e.preventDefault();
+    const modalInstance = modalRef.current?.modalInstance;
+
+    if (modalInstance) {
+      modalInstance.hide();
+      router.push("/shop-collection-sub");
+    }
+  };
+
+  const increaseQuantity = (cartItem, id) => {
+    const newQuantity = Number(cartItem.quantity) + 1;
+    if (cartItem.category === "Kids Bags") {
+      updateQuantity(cartItem, id, newQuantity);
+    } else {
+      updateQuantity(cartItem, id, newQuantity);
+    }
+  };
+
+  const handleFileUpload = async (
+    event,
+    productId,
+    quantity,
+    imageCount,
+    category,
+  ) => {
+    const files = Array.from(event.target.files);
+    if (files.length === 0) return;
+
+    const maxTotalSize = 50 * 1024 * 1024; // 50MB total limit
+    const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+    if (totalSize > maxTotalSize) {
+      toast.error("Total file size exceeds 50MB limit.");
+      event.target.value = "";
+      return;
+    }
+
+    const maxIndividualSize = 25 * 1024 * 1024; // 25MB individual limit
+    const oversizedFile = files.find((file) => file.size > maxIndividualSize);
+    if (oversizedFile) {
+      toast.error(`File "${oversizedFile.name}" exceeds 25MB limit.`);
+      event.target.value = "";
+      return;
+    }
+
+    const remainingSlots =
+      category === "Kids Bags" ? 1 - imageCount : quantity - imageCount;
+    const filesToUpload =
+      remainingSlots >= files.length ? files : files.slice(0, remainingSlots);
+
+    if (filesToUpload.length === 0) {
+      toast.error(
+        category === "Kids Bags"
+          ? "Only one image is allowed for Kids Bags."
+          : `No more images can be uploaded. Current image count (${imageCount}) matches or exceeds quantity (${quantity}).`,
+      );
+      return;
+    }
+
+    const uploadPromise = async () => {
+      const fileMetadata = filesToUpload.map((file) => ({
+        name: file.name,
+        type: file.type,
+      }));
+      const formData = new FormData();
+      formData.append("files", JSON.stringify(fileMetadata));
+      formData.append("quantity", filesToUpload.length.toString());
+      formData.append("productId", productId);
+
+      const result = await getPresignedUrls(formData);
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      const { presignedUrls } = result;
+
+      const uploadPromises = [];
+      const multipartThreshold = 5 * 1024 * 1024; // 5MB threshold for multipart
+
+      for (let i = 0; i < filesToUpload.length; i++) {
+        const file = filesToUpload[i];
+        uploadPromises.push(
+          (async () => {
+            let publicUrl;
+            if (file.size > multipartThreshold) {
+              try {
+                publicUrl = await uploadMultipartFile(
+                  file,
+                  1,
+                  5 * 1024 * 1024, // 2MB part size
+                  initiateMultipartUpload,
+                  completeMultipartUpload,
+                  abortMultipartUpload,
+                );
+              } catch (error) {
+                throw new Error(
+                  `Upload failed for ${file.name}: ${error.message}`,
+                );
+              }
+            } else {
+              const uploadResponse = await fetch(
+                presignedUrls[i].presignedUrl,
+                {
+                  method: "PUT",
+                  body: file,
+                  headers: { "Content-Type": file.type },
+                },
+              );
+
+              if (!uploadResponse.ok) {
+                throw new Error(
+                  `Failed to upload ${file.name}: ${uploadResponse.statusText}`,
+                );
+              }
+              publicUrl = presignedUrls[i].publicUrl;
+            }
+
+            return publicUrl;
+          })(),
+        );
+      }
+
+      const uploadedUrls = await Promise.all(uploadPromises);
+
+      const currentImages = imageUrls[productId] || [];
+      const updatedImages = [...currentImages, ...uploadedUrls].slice(
+        0,
+        category === "Kids Bags" ? 1 : quantity,
+      );
+      const newImageCount = updatedImages.length;
+
+      dispatch(
+        updateCartItem({
+          product: productId,
+          uploadedImage: updatedImages,
+        }),
+      );
+
+      return { newImageCount, updatedImages };
+    };
+
+    toast
+      .promise(
+        uploadPromise(),
+        {
+          loading: `Uploading ${filesToUpload.length} image${
+            filesToUpload.length > 1 ? "s" : ""
+          }...`,
+          success: ({ newImageCount }) => {
+            if (newImageCount > quantity) {
+              return `Warning: Uploaded image count (${newImageCount}) exceeds quantity (${quantity}).`;
+            } else if (newImageCount < quantity) {
+              return `Still need ${
+                quantity - newImageCount
+              } more images for product ${productId}.`;
+            }
+            return "Uploaded image(s) successfully";
+          },
+          error: (err) => err?.message || "Upload failed. Try again.",
+        },
+        {
+          success: {
+            icon: ({ newImageCount }) =>
+              newImageCount > quantity
+                ? "⚠️"
+                : newImageCount < quantity
+                  ? "ℹ️"
+                  : undefined,
+          },
+        },
+      )
+      .then(() => {
+        event.target.value = "";
+      })
+      .catch((err) => {
+        console.error("Upload failed:", err);
+      });
+  };
+
+  const decreaseQuantity = (cartItem, id) => {
+    const newQuantity = Number(cartItem.quantity) - 1;
+    if (newQuantity >= 1) {
+      updateQuantity(cartItem, id, newQuantity);
+    }
+  };
+
+  const updateQuantity = (item, id, quantity, uploadedImage) => {
+    const safeQuantity = Number(quantity) || 1;
+    const updatedCartProducts = cartProducts.map((product) =>
+      product.id === id ? { ...product, quantity: safeQuantity } : product,
+    );
+    setCartProducts(updatedCartProducts);
+    const cartItem = {
+      product: id,
+      name: item?.name || "",
+      price: Number(item?.offer) || Number(item?.price) || 0,
+      image: item?.image || "",
+      stock: item?.stock || 0,
+      quantity: safeQuantity,
+      offer: item?.offer || 0,
+      ...(item.category === "Kids Bags" && uploadedImage
+        ? { uploadedImage }
+        : {}),
+    };
+    dispatch(updateCartItem(cartItem));
+  };
+
+  const removeItem = (id) => {
+    setCartProducts((prev) => prev.filter((item) => item.product !== id));
+    dispatch(removeCartItem(id));
+    dispatch(resetSingleProduct());
+  };
+
+  const handleCheckoutClick = () => {
+    const invalidCustomBags = cartItems.filter(
+      (item) =>
+        item.category === "custom_sling_bag" &&
+        (!item.customNameToPrint || item.customNameToPrint.trim() === ""),
+    );
+    if (invalidCustomBags.length === 0) {
+      router.push("/checkout", { scroll: false });
+    } else {
+      const productNames = invalidCustomBags
+        .map((item) => item.name)
+        .join(", ");
+      // toast.error(
+      //   `Please provide a name for the following custom sling bag products: ${productNames}`
+      // );
+
+      setNameErrorMessage(
+        `Please provide a name for these bags (Note: Names are optional for Kids Bags): ${productNames}`,
+      );
+      console.log("Invalid custom bags:", invalidCustomBags);
+    }
+  };
+
+  return (
+    <div
+      ref={modalRef}
+      className="modal fullRight fade modal-shopping-cart"
+      id="shoppingCart"
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="header">
+            <div className="title fw-5">Shopping cart</div>
+            <span
+              className="icon-close icon-close-popup"
+              data-bs-dismiss="modal"
+            />
+          </div>
+          <div className="wrap">
+            <div className="tf-mini-cart-wrap mt-3">
+              <div className="tf-mini-cart-main">
+                <div className="tf-mini-cart-sroll pb-5">
+                  <div className="tf-mini-cart-items">
+                    {cartItems?.map((elm, i) => (
+                      <div
+                        key={i}
+                        className="tf-mini-cart-item border-bottom border-black"
+                      >
+                        <div className="tf-mini-cart-image">
+                          <Link
+                            href={
+                              elm.category !== "Kids Bags"
+                                ? `/product-no-zoom/${elm.product}`
+                                : `/product-detail/${elm.product}`
+                            }
+                          >
+                            <Image
+                              alt="image"
+                              src={elm.image}
+                              width={668}
+                              height={932}
+                              style={{
+                                objectFit: "cover",
+                                borderRadius: "15px",
+                              }}
+                            />
+                          </Link>
+                        </div>
+                        <div className="tf-mini-cart-info">
+                          <Link
+                            className="title link"
+                            href={
+                              elm.category !== "Kids Bags"
+                                ? `/product-no-zoom/${elm.product}`
+                                : `/product-detail/${elm.product}`
+                            }
+                          >
+                            {elm.name}
+                          </Link>
+                          <div className="price fw-6">
+                            ₹
+                            {(Number(elm.price) * Number(elm.quantity)).toFixed(
+                              2,
+                            )}
+                          </div>
+                          {elm.category === "Kids Bags" && (
+                            <>
+                              <div className="popover-container">
+                                <button
+                                  type="button"
+                                  className="popover-button text-decoration-underline"
+                                  onClick={() =>
+                                    handlePopoverToggle(
+                                      elm.product,
+                                      elm.uploadedImage,
+                                    )
+                                  }
+                                >
+                                  Uploaded image(s)
+                                </button>
+                                {elm.customNameToPrint && (
+                                  <div
+                                    className="uploaded-name"
+                                    style={{ fontSize: "13px", color: "#666" }}
+                                  >
+                                    <span className="fw-6">Name: </span>
+                                    <span>{elm.customNameToPrint}</span>
+                                  </div>
+                                )}
+
+                                {popoverStates[elm.product] &&
+                                  imageUrls[elm.product] &&
+                                  imageUrls[elm.product].length > 0 && (
+                                    <div
+                                      className="popover-content"
+                                      data-placement="bottom"
+                                    >
+                                      <div className="position-relative">
+                                        <Swiper
+                                          modules={[Navigation, Pagination]}
+                                          spaceBetween={10}
+                                          slidesPerView={1}
+                                          navigation={{
+                                            prevEl: prevRef.current,
+                                            nextEl: nextRef.current,
+                                          }}
+                                          onBeforeInit={(swiper) => {
+                                            swiper.params.navigation.prevEl =
+                                              prevRef.current;
+                                            swiper.params.navigation.nextEl =
+                                              nextRef.current;
+                                          }}
+                                          style={{
+                                            width: "100px",
+                                            height: "100px",
+                                          }}
+                                        >
+                                          {imageUrls[elm.product].map(
+                                            (url, index) => (
+                                              <SwiperSlide
+                                                key={index}
+                                                className="position-relative"
+                                              >
+                                                <Image
+                                                  src={url}
+                                                  alt={`Uploaded image ${
+                                                    index + 1
+                                                  } for ${elm.name}`}
+                                                  width={100}
+                                                  height={100}
+                                                  className="popover-image"
+                                                  style={{
+                                                    objectFit: "contain",
+                                                    width: "100%",
+                                                    height: "100%",
+                                                  }}
+                                                />
+                                   
+                                                {imageUrls[elm.product].length >
+                                                  1 && (
+                                                  <button
+                                                    style={{
+                                                      fontSize: "10px",
+                                                      left: "40%",
+                                                    }}
+                                                    onClick={() =>
+                                                      handleRemoveImage(
+                                                        elm.product,
+                                                        elm,
+                                                        index,
+                                                      )
+                                                    }
+                                                    className="position-absolute border-0 bg-opacity-75 text-white p-1 rounded-circle bottom-0 bg-danger"
+                                                  >
+                                                    <FontAwesomeIcon
+                                                      style={{ color: "white" }}
+                                                      icon={faTrash}
+                                                    />
+                                                  </button>
+                                                )}
+                                              </SwiperSlide>
+                                            ),
+                                          )}
+                                          <button
+                                            ref={prevRef}
+                                            className="nav-btn prev-btn"
+                                          >
+                                            <FontAwesomeIcon
+                                              icon={faCircleChevronLeft}
+                                              size="sm"
+                                            />
+                                          </button>
+                                          <button
+                                            ref={nextRef}
+                                            className="nav-btn next-btn"
+                                          >
+                                            <FontAwesomeIcon
+                                              icon={faCircleChevronRight}
+                                              size="sm"
+                                            />
+                                          </button>
+                                        </Swiper>
+                                      </div>
+
+                                      <button
+                                        type="button"
+                                        style={{ zIndex: 999 }}
+                                        className="popover-close-button"
+                                        onClick={() =>
+                                          handleClosePopover(elm.product)
+                                        }
+                                      >
+                                        <FontAwesomeIcon
+                                          icon={faTimes}
+                                          size="xs"
+                                        />
+                                      </button>
+                                    </div>
+                                  )}
+                              </div>
+                              {(elm.category === "Kids Bags"
+                                ? (imageUrls[elm.product]?.length || 0) === 0
+                                : imageUrls[elm.product]?.length !==
+                                  elm.quantity) && (
+                                <div className="upload-input-container">
+                                  {isLoading ? (
+                                    <div
+                                      className="spinner-border spinner-border-sm text-primary"
+                                      role="status"
+                                    >
+                                      <span className="visually-hidden">
+                                        Uploading...
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <input
+                                      type="file"
+                                      className="form-control form-control-sm"
+                                      accept="image/*"
+                                      multiple
+                                      ref={(el) => {
+                                        if (el)
+                                          fileInputRefs.current[elm.product] =
+                                            el;
+                                      }}
+                                      onChange={(e) =>
+                                        handleFileUpload(
+                                          e,
+                                          elm.product,
+                                          elm.quantity,
+                                          imageUrls[elm.product]?.length || 0,
+                                          elm.category,
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </div>
+                              )}
+                            </>
+                          )}
+                          {elm.category !== "custom_sling_bag" && (
+                            <div className="tf-mini-cart-btns">
+                              <div className="wg-quantity small">
+                                <span
+                                  className="btn-quantity minus-btn"
+                                  onClick={() =>
+                                    decreaseQuantity(elm, elm.product)
+                                  }
+                                >
+                                  -
+                                </span>
+                                <input
+                                  type="number"
+                                  name="number"
+                                  value={elm.quantity}
+                                  min={1}
+                                  readOnly
+                                  onChange={(e) =>
+                                    updateQuantity(
+                                      elm,
+                                      elm.product,
+                                      parseInt(e.target.value) || 1,
+                                    )
+                                  }
+                                />
+                                <span
+                                  className="btn-quantity plus-btn"
+                                  onClick={() =>
+                                    increaseQuantity(elm, elm.product)
+                                  }
+                                >
+                                  +
+                                </span>
+                              </div>
+                              <div
+                                className="tf-mini-cart-remove"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => removeItem(elm.product)}
+                              >
+                                Remove
+                              </div>
+                            </div>
+                          )}
+                          {elm.category === "custom_sling_bag" && (
+                            <div className="custom-name-container pt-1 d-flex flex-column align-items-start">
+                              <div className="input-group mb-1">
+                                <input
+                                  type="text"
+                                  className="form-control py-1"
+                                  placeholder={
+                                    elm.category === "Kids Bags"
+                                      ? "Enter the name on bag (Optional)"
+                                      : "Enter the name on bag"
+                                  }
+                                  aria-label="Enter the name on bag"
+                                  maxLength={11}
+                                  value={elm.customNameToPrint}
+                                  onChange={(e) =>
+                                    handleNameChange(
+                                      elm.product,
+                                      e.target.value,
+                                    )
+                                  }
+                                  ref={(el) => {
+                                    if (el)
+                                      nameInputRefs.current[elm.product] = el;
+                                  }}
+                                />
+                              </div>
+                              {elm.customNameToPrint && (
+                                <div className="text-muted">
+                                  {elm.customNameToPrint.length} / 11 characters
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          {elm.category === "custom_sling_bag" && (
+                            <div
+                              className="tf-mini-cart-remove"
+                              style={{
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                              }}
+                              onClick={() => removeItem(elm.product)}
+                            >
+                              Remove
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    {!cartItems?.length && (
+                      <div className="container">
+                        <div className="row align-items-center mt-5 mb-5">
+                          <div className="col-12 fs-18">
+                            Your shop cart is empty
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="tf-mini-cart-bottom">
+                <div className="tf-mini-cart-bottom-wrap">
+                  <div className="tf-cart-totals-discounts">
+                    <div className="tf-cart-total">Subtotal</div>
+                    <div className="tf-totals-total-value fw-6">
+                      ₹ {subtotal.toFixed(2)}
+                    </div>
+                  </div>
+                  <div className="tf-mini-cart-line" />
+                  <div className="tf-cart-checkbox"></div>
+                  <div
+                    data-bs-dismiss="modal"
+                    className="tf-mini-cart-view-checkout flex-column"
+                  >
+                    {isQuantityValid() ? (
+                      <>
+                        {nameErrorMessage && (
+                          <span className="text-danger">
+                            {nameErrorMessage}
+                          </span>
+                        )}
+                        <button
+                          className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
+                          onClick={handleCheckoutClick}
+                        >
+                          <span>Check out</span>
+                        </button>
+                      </>
+                    ) : cartItems.length > 0 ? (
+                      <>
+                        <span className="text-danger">
+                          Please upload images for these Kids Bags:
+                        </span>
+                        <ul className="text-danger">
+                          {cartItems
+                            .filter(
+                              (item) =>
+                                item.category === "Kids Bags" &&
+                                (imageUrls[item.product]?.length || 0) === 0,
+                            )
+                            .map((item, index) => (
+                              <li key={index}>{item.name}</li>
+                            ))}
+                        </ul>
+                        <button
+                          disabled
+                          className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
+                          onClick={(e) => {
+                            e.preventDefault();
+                          }}
+                        >
+                          <span>Check out</span>
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        disabled
+                        className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
+                        onClick={(e) => {
+                          e.preventDefault();
+                        }}
+                      >
+                        <span>Check out</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

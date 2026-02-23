@@ -1,0 +1,236 @@
+@import "/fonts/fonts.css";
+@import "/fonts/font-icons.css";
+@import "/css/bootstrap.min.css";
+@import "/css/swiper-bundle.min.css";
+@import "/css/animate.css";
+@import "./app.scss";
+@import "./rtl.scss";
+@import "./custom.scss";
+// @import "photoswipe/dist/photoswipe.css";
+// @import "rc-slider/assets/index.css";
+
+.search-wrap {
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  border: 2px solid #1a1a1a;
+  border-radius: 4px;
+  padding: 0 0 0 1.4rem;
+  transition: box-shadow 0.2s;
+}
+
+.search-box.focused {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+
+.search-icon {
+  color: #1a1a1a;
+  font-size: 1rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  border: none !important;
+  border-color: "transparent" !important;
+  padding: 0 !important;
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  transition: color 0.15s;
+  display: flex;
+  align-items: center;
+}
+
+.clear-btn:hover {
+  color: #1a1a1a;
+}
+
+.search-btn {
+  background: #1a1a1a;
+  color: #f5f3ef;
+  border: none;
+  padding: 0.55rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.search-btn:hover {
+  background: #333;
+}
+
+.happy-customers-row::-webkit-scrollbar {
+  height: 6px;
+}
+.happy-customers-row::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.happy-customers-row::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+.happy-customers-row::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 10s linear infinite;
+  width: max-content;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 12s;
+  }
+}
+
+@media (max-width: 576px) {
+  .animate-marquee {
+    animation-duration: 10s;
+  }
+}
+
+.popover-button {
+  border: none;
+  padding: 0;
+  margin-top: 4px;
+  margin-bottom: 0;
+  background: none;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.popover-container {
+  position: relative;
+  display: inline-block;
+}
+
+.popover-content {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.popover-content[data-placement="bottom"]:before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: #e0e0e0;
+}
+
+.popover-close-button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: #f0f0f0;
+  border-radius: 50%;
+}
+
+.my-account-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+}
+
+@media (max-width: 991px) {
+  .my-account-nav {
+    margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .my-account-nav {
+    flex-direction: row;
+    align-items: stretch;
+    overflow-x: auto;
+    gap: 10px;
+  }
+}
+
+.testimonial-row {
+  display: flex;
+  padding: 20px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.testimonial-image-item {
+  flex: 0 0 auto;
+  width: 120px;
+  height: 120px;
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.testimonial-image {
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
