@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
       sparse: true, // Allows the unique constraint to be ignored if the value is null or undefined
       validate: {
         validator: function (value) {
-          return !this.email || !!value; 
+          return !this.email || !!value;
         },
         message: "Email or phone is required",
       },
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       public_id: String,
-      url: String, 
+      url: String,
     },
     role: {
       type: String,
@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema(
       default: "Email/Password", // Provide a default value
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Hash password before saving
