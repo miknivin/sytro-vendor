@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
 
 export default function RouteGuard({
@@ -11,7 +11,6 @@ export default function RouteGuard({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { isLoading, isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -26,18 +25,13 @@ export default function RouteGuard({
     }
 
     if (guestOnly && isAuthenticated) {
-      const nextPath = searchParams.get("next");
+      const nextPath =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("next")
+          : null;
       router.replace(nextPath || "/");
     }
-  }, [
-    guestOnly,
-    isAuthenticated,
-    isLoading,
-    pathname,
-    requireAuth,
-    router,
-    searchParams,
-  ]);
+  }, [guestOnly, isAuthenticated, isLoading, pathname, requireAuth, router]);
 
   if (
     isLoading ||

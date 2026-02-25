@@ -1,15 +1,17 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import DesignUpload from "../customizeBags/DesignUpload";
 import {
   setUploadedImage,
   setSelectedDesign,
   setCustomName,
+  setCartItem,
 } from "@/store/slices/cartSlice";
 import { getPresignedUrls } from "@/functions/action";
 import { useGetProductDetailsQuery } from "@/store/api/productsApi";
+import { openCartModal } from "@/utlis/openCartModal";
 
 
 export default function SuperKidBag() {
@@ -23,8 +25,6 @@ export default function SuperKidBag() {
   const [localCustomName, setLocalCustomName] = useState("");
   const dispatch = useDispatch();
   const closeRef = useRef(null);
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (productById && customNames?.[productById._id]) {
@@ -38,7 +38,6 @@ export default function SuperKidBag() {
     if (!productById?._id) return;
 
     if (uploadedUrls && uploadedUrls.length > 0) {
-      // Dispatch array of uploaded URLs
       dispatch(
         setUploadedImage({
           productId: productById._id,
@@ -46,7 +45,6 @@ export default function SuperKidBag() {
         })
       );
 
-      // Dispatch custom name
       dispatch(
         setCustomName({
           productId: productById._id,
@@ -54,14 +52,32 @@ export default function SuperKidBag() {
         })
       );
 
-      const isUploadImage = searchParams.get("isUploadImage");
-      if (isUploadImage === "proceeding") {
-        router.push(`${window.location.pathname}?isUploadImage=true`, {
-          scroll: false,
-        });
-      }
+      const storedSelectedDesigns =
+        typeof window !== "undefined"
+          ? JSON.parse(localStorage.getItem("selectedDesigns") || "{}")
+          : {};
+
+      dispatch(
+        setCartItem({
+          product: productById._id,
+          name: productById.name,
+          category: productById.category || "Kids Bags",
+          price: productById.offer,
+          image: productById?.images?.[0]?.url,
+          stock: productById.stock,
+          quantity: 1,
+          ...(localCustomName.trim()
+            ? { customNameToPrint: localCustomName.trim() }
+            : {}),
+          selectedDesign: storedSelectedDesigns?.[productById._id] || null,
+          uploadedImage: uploadedUrls,
+        }),
+      );
+
+      closeRef.current?.click();
+      openCartModal();
+      return;
     } else {
-      // Reset if no URLs are provided
       dispatch(
         setUploadedImage({
           productId: productById._id,

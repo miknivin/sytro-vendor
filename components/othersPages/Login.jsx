@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
 export default function Login() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { login } = useAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -18,7 +17,10 @@ export default function Login() {
     setIsSubmitting(true);
     try {
       await login({ email, password });
-      const nextPath = searchParams.get("next");
+      const nextPath =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("next")
+          : null;
       router.replace(nextPath || "/");
     } catch (submitError) {
       setError(submitError.message || "Login failed");

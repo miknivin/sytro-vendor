@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUploadedImage, setCartItem } from "@/store/slices/cartSlice";
 import toast from "react-hot-toast";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import OfferTimer from "@/utlis/OfferTimer";
 import HappyCustomers from "../common/HappyCustomers";
@@ -45,7 +45,6 @@ export default function DetailsOuterZoom({ product, details }) {
   }, [product?._id, customNames]);
 
   const [showAlert, setShowAlert] = useState(false);
-  const searchParams = useSearchParams();
   const uploadModal = useRef(null);
   const quantityChange = useSelector((state) => state.cart.quantityChange);
   const isAddedToCartProducts = (id) => {
@@ -103,14 +102,17 @@ export default function DetailsOuterZoom({ product, details }) {
     setShowAlert(false);
   };
   useEffect(() => {
-    const isUploadImage = searchParams.get("isUploadImage");
+    const isUploadImage =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("isUploadImage")
+        : null;
     if (isUploadImage === "true" && hasCustomDesign) {
       if (!isAddedToCartProducts(product._id)) {
         setItemToCart();
       }
       openCartModal();
     }
-  }, [searchParams]);
+  }, [hasCustomDesign, product._id]);
 
   useEffect(() => {
     if (product.category !== "Kids Bags") {
@@ -423,7 +425,18 @@ export default function DetailsOuterZoom({ product, details }) {
                   </div>
                   <div className="tf-product-info-buy-button">
                     <form onSubmit={(e) => e.preventDefault()} className="">
-                      {!hasCustomDesign ? (
+                      {product.category === "Kids Bags" ? (
+                        <a
+                          href="#super_kidbag"
+                          data-bs-toggle="modal"
+                          className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn mb-2"
+                        >
+                          <span>Order now :{"  "}</span>
+                          <span className="tf-qty-price">
+                            {"   "}₹{(product.offer * quantity).toFixed(2)}
+                          </span>
+                        </a>
+                      ) : !hasCustomDesign ? (
                         <>
                           <a
                             href="#super_kidbag"

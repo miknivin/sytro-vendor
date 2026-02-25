@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { useCheckCouponMutation } from "@/store/api/orderApi";
 import Swal from "sweetalert2";
@@ -40,7 +40,6 @@ const CartFooter = ({
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [couponCode, setCouponCode] = useState("");
   const [couponError, setCouponError] = useState("");
@@ -138,27 +137,34 @@ const CartFooter = ({
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    const newSearchParams = new URLSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(
+      typeof window !== "undefined" ? window.location.search : "",
+    );
     newSearchParams.set("toclickplaceorder", "true");
     router.push(`?${newSearchParams.toString()}`);
   };
 
   useEffect(() => {
+    const currentSearchParams = new URLSearchParams(
+      typeof window !== "undefined" ? window.location.search : "",
+    );
     if (
       isAuthenticated &&
-      searchParams.get("toclickplaceorder") === "true" &&
+      currentSearchParams.get("toclickplaceorder") === "true" &&
       buttonRef.current &&
       !hasClickedRef.current
     ) {
       if (!isLoading && isFormValid() && cartItems.length > 0) {
         hasClickedRef.current = true;
         buttonRef.current.click();
-        const newSearchParams = new URLSearchParams(searchParams);
+        const newSearchParams = new URLSearchParams(
+          typeof window !== "undefined" ? window.location.search : "",
+        );
         newSearchParams.delete("toclickplaceorder");
         router.replace(`?${newSearchParams.toString()}`);
       }
     }
-  }, [isAuthenticated, searchParams, isLoading, cartItems, router]);
+  }, [isAuthenticated, isLoading, cartItems, router]);
 
   const isAnyLoading = isLoading || isCheckingCoupon;
 

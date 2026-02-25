@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useSearchParams } from "next/navigation";
 
 import { uploadMultipartFile } from "@/utlis/uploadMultipart";
 import {
@@ -19,8 +18,13 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
   const [uploadingIndices, setUploadingIndices] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef();
-  const searchParams = useSearchParams();
-  const quantity = parseInt(searchParams.get("quantity") || "1");
+  const quantity =
+    typeof window !== "undefined"
+      ? parseInt(
+          new URLSearchParams(window.location.search).get("quantity") || "1",
+          10,
+        )
+      : 1;
 
   const [initiateMultipartUpload] = useInitiateMultipartUploadMutation();
   const [completeMultipartUpload] = useCompleteMultipartUploadMutation();

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import {
   useOrderDetailsQuery,
   useLazyGetInvoiceUrlQuery,
@@ -15,9 +14,12 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
 
 export default function OrderDetails() {
-  const searchParams = useSearchParams();
   const [currentImage, setCurrentImage] = useState([]);
-  const orderId = searchParams.get("orderId");
+  const [orderId, setOrderId] = useState(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setOrderId(new URLSearchParams(window.location.search).get("orderId"));
+  }, []);
   const { data, isLoading, error } = useOrderDetailsQuery(orderId, {
     skip: !orderId,
   });

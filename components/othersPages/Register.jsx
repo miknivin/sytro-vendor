@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
 
 export default function Register() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { register } = useAuth();
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -22,7 +21,10 @@ export default function Register() {
     try {
       const fullName = `${firstName} ${lastName}`.trim();
       await register({ name: fullName, email, password });
-      const nextPath = searchParams.get("next");
+      const nextPath =
+        typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("next")
+          : null;
       router.replace(nextPath || "/");
     } catch (submitError) {
       setError(submitError.message || "Registration failed");
