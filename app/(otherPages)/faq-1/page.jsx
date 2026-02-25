@@ -5,18 +5,20 @@ import Faq2 from "@/components/othersPages/faq/Faq2";
 import Faq3 from "@/components/othersPages/faq/Faq3";
 import React from "react";
 import Link from "next/link";
+import Faq4 from "@/components/othersPages/faq/Faq4";
+import Header4 from "@/components/headers/Header4";
 export const metadata = {
-  title: "Faq 1 || Sytro - Vendor",
-  description: "Sytro - Vendor",
+  title: "Faq || Sytro",
+  description: "Sytro",
 };
 export default function page() {
   return (
     <>
-      <Header2 />
+      <Header4 />
       <>
         <div className="tf-page-title style-2">
           <div className="container-full">
-            <div className="heading text-center">FAQ 01</div>
+            <div className="heading text-center">FAQ</div>
           </div>
         </div>
         {/* /page-title */}
@@ -28,6 +30,7 @@ export default function page() {
                 <Faq1 />
                 <Faq2 />
                 <Faq3 />
+                <Faq4 />
               </div>
               <div className="box tf-other-content radius-10 bg_grey-8">
                 <h5 className="mb_20">Have a question</h5>
@@ -42,15 +45,15 @@ export default function page() {
                 </p>
                 <div className="d-flex gap-20 align-items-center">
                   <Link
-                    href={`/contact-1`}
+                    href={`/contact-2`}
                     className="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center"
                   >
                     Contact us
                   </Link>
-                  <Link href={`/contact-2`} className="tf-btn btn-line">
+                  {/* <Link href={`/contact-2`} className="tf-btn btn-line">
                     Live chat
                     <i className="icon icon-arrow1-top-left" />
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

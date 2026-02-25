@@ -1,12 +1,13 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
+
 import ContactForm2 from "@/components/othersPages/contact/ContactForm2";
 import Map2 from "@/components/othersPages/contact/Map2";
 import React from "react";
 
 export const metadata = {
-  title: "Contact 2 || Sytro - Vendor",
-  description: "Sytro - Vendor",
+  title: "Contact || Sytro",
+  description: "Sytro",
 };
 export default function page() {
   return (

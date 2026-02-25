@@ -1,5 +1,7 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
+import Header2 from "@/components/headers/Header2";
+import Link from "next/link";
 import React from "react";
 
 export default function page() {
@@ -19,168 +21,150 @@ export default function page() {
           <div className="container">
             <div className="tf-main-area-page tf-terms-conditions">
               <div className="box">
-                <h4>These Terms and Conditions May Change</h4>
+                <h4>Terms and Conditions for Sytro</h4>
                 <p>
-                  We reserve the right to update or modify these terms and
-                  conditions at any time without prior notice. Your use of
-                  shop.company.com and shop.beetle.com.sg following any such
-                  change constitutes your agreement to follow and be bound by
-                  the terms and conditions as changed. For this reason, we
-                  encourage you to review these terms and conditions whenever
-                  you use this website.
+                  Welcome to Sytro! These Terms and Conditions govern your use
+                  of our website [www.sytro.com] and your purchase of products
+                  from us. By accessing or using our website, you agree to
+                  comply with and be bound by these terms. Please read them
+                  carefully.
                 </p>
               </div>
               <div className="box">
-                <h4>Limitations of Liability</h4>
+                <h4>1. Website Usage</h4>
                 <p>
-                  The Company Pte Ltd shall not assume any responsibility, and
-                  shall not be liable for, any damages to, or viruses that may
-                  infect, your computer, telecommunication equipment, or other
-                  property caused by or arising from your access to, use of, or
-                  browsing this website or your downloading of any materials,
-                  from this website. IN NO EVENT WILL THE COMPANY PRIVATE
-                  LIMITED NOR THEIR RESPECTIVE OFFICERS, DIRECTORS, EMPLOYEES,
-                  SHAREHOLDERS, AFFILIATES, AGENTS, SUCCESSORS, ASSIGNS, RETAIL
-                  PARTNERS NOR ANY PARTY INVOLVED IN THE CREATION, PRODUCTION OR
-                  TRANSMISSION OF THIS WEB SITE BE LIABLE TO ANY PARTY FOR ANY
-                  INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
-                  DAMAGES (INCLUDING, WITHOUT LIMITATION, THOSE RESULTING FROM
-                  LOST PROFITS, LOST DATA OR BUSINESS INTERRUPTION) ARISING OUT
-                  OF THE USE, INABILITY TO USE, OR THE RESULTS OF USE OF THIS
-                  WEB SITE, ANY WEB SITES LINKED TO THIS WEB SITE, OR THE
-                  MATERIALS, INFORMATION OR SERVICES CONTAINED AT ANY OR ALL
-                  SUCH SITES, WHETHER BASED ON WARRANTY, CONTRACT, TORT OR ANY
-                  OTHER LEGAL THEORY AND WHETHER OR NOT ADVISED OF THE
-                  POSSIBILITY OF SUCH DAMAGES. THE FOREGOING LIMITATIONS OF
-                  LIABILITY DO NOT APPLY TO THE EXTENT PROHIBITED BY LAW. PLEASE
-                  REFER TO YOUR LOCAL LAWS FOR ANY SUCH PROHIBITIONS.
-                </p>
-                <p>
-                  IN THE EVENT OF ANY PROBLEM WITH THIS WEBSITE OR ANY CONTENT,
-                  YOU AGREE THAT YOUR SOLE REMEDY IS TO CEASE USING THIS
-                  WEBSITE. IN THE EVENT OF ANY PROBLEM WITH THE PRODUCTS OR
-                  SERVICES THAT YOU HAVE PURCHASED ON OR THROUGH THIS WEB SITE,
-                  YOU AGREE THAT YOUR REMEDY, IF ANY, IS FROM THE MANUFACTURER
-                  OF SUCH PRODUCTS OR SUPPLIER OF SUCH SERVICES, IN ACCORDANCE
-                  WITH SUCH MANUFACTURER’S OR SUPPLIER’S WARRANTY, OR TO SEEK A
-                  RETURN AND REFUND FOR SUCH PRODUCT OR SERVICES IN ACCORDANCE
-                  WITH THE RETURNS AND REFUNDS POLICIES POSTED ON THIS WEB SITE.
-                  This site may include inaccuracies, mistakes or typographical
-                  errors. CharlesKeith.com does not warrant that the content
-                  will be uninterrupted or error free.
+                  There are no age restrictions or specific prohibitions for
+                  using our website. However, you agree to use the website for
+                  lawful purposes only and not to engage in any activity that
+                  disrupts or interferes with its functionality.
                 </p>
               </div>
               <div className="box">
-                <h4>Copyright and Trademark</h4>
+                <h4>2. Intellectual Property</h4>
+                <ul className="pp-list">
+                  <li>
+                    All content on this website, including but not limited to
+                    text, graphics, logos, images, and software, is the property
+                    of Sytro and is protected by Indian and international
+                    copyright laws.
+                  </li>
+                  <li>
+                    You may not reproduce, distribute, or use any content from
+                    this website without our prior written permission.
+                  </li>
+                </ul>
+              </div>
+              <div className="box">
+                <h4>3. Limitation of Liability</h4>
                 <p>
-                  Unless otherwise indicated, material on this website,
-                  including but not limited to texts, images, illustrations,
-                  software, audio clips, video clips, animation files, is
-                  subject to the copyright and trademark rights of The Company
-                  Private Limited. Consequently, the material on this website
-                  may not be copied, reproduced, modified, posted, transmitted,
-                  distributed, in whole or in part in any form whatsoever,
-                  without the prior written consent of The Company Private
-                  Limited. All rights reserved.
+                  Sytro sells bags and related products. We are not liable for
+                  any damages, injuries, or losses arising from the use of our
+                  products or website, except as required by law.
                 </p>
               </div>
               <div className="box">
-                <h4>Products, Content and Specifications</h4>
+                <h4>4. Governing Law</h4>
                 <p>
-                  All features, content, specifications, products and prices of
-                  products and services described or depicted on this website
-                  are subject to change at any time without notice. Certain
-                  weights, measures and similar descriptions are approximate and
-                  are provided for convenience purposes only. We make all
-                  reasonable efforts to accurately display the attributes of our
-                  products, including the applicable colors; however, the actual
-                  color you see will depend on your computer system and we
-                  cannot guarantee that your computer will accurately display
-                  such colors. The inclusion of any products or services in this
-                  website at a particular time does not imply or warrant that
-                  these products or services will be available at any time. It
-                  is your responsibility to ascertain and obey all applicable
-                  local, state and international laws in regard to the
-                  possession, use and sale of any item purchased from this
-                  website. By placing an order, you represent that the products
-                  ordered will be used only in a lawful manner.
+                  These Terms and Conditions are governed by and construed in
+                  accordance with the laws of India. Any disputes will be
+                  subject to the exclusive jurisdiction of the courts in
+                  Ernakulam, Kerala.
                 </p>
               </div>
               <div className="box">
-                <h4>Shipping Limitations</h4>
-                <p>
-                  When an order is placed, it will be shipped to an address
-                  designated by the purchaser as long as that shipping address
-                  is compliant with the shipping restrictions contained on this
-                  website. All purchases from this website are made pursuant to
-                  a shipment contract. As a result, risk of loss and title for
-                  items purchased from this website pass to you upon delivery of
-                  the items to the carrier. You are responsible for filing any
-                  claims with carriers for damaged and/or lost shipments.
-                </p>
+                <h4>5. Payment Terms</h4>
+                <ul className="pp-list">
+                  <li>
+                    We accept payments through our secure payment gateway, which
+                    supports credit/debit cards, UPI, and other online payment
+                    methods.
+                  </li>
+                  <li>
+                    We also offer Cash on Delivery (COD) for eligible orders.
+                    However, COD is not available for kids' bags. All prices are
+                    listed in Indian Rupees (INR) and are inclusive of
+                    applicable taxes.
+                  </li>
+                  <li>
+                    All prices are listed in Indian Rupees (INR) and are
+                    inclusive of applicable taxes.
+                  </li>
+                </ul>
               </div>
               <div className="box">
-                <h4>Duties and Taxes</h4>
-                <p>
-                  You are responsible for duties and taxes outside Singapore.
-                  All items entering a foreign country are subject to customs
-                  inspection and assessment of the duties and taxes in
-                  accordance with that country’s national laws.
-                </p>
+                <h4>6. Shipping and Delivery</h4>
+                <ul className="pp-list">
+                  <li>
+                    Please refer to our{" "}
+                    <Link style={{ color: "blue" }} href="/shipping-delivery">
+                      Shipping Policy
+                    </Link>{" "}
+                    for details about shipping timelines, delivery areas, and
+                    handling of delays or lost packages.
+                  </li>
+                  <li>
+                    We strive to deliver your orders promptly, but we are not
+                    responsible for delays caused by unforeseen circumstances
+                    (e.g., natural disasters, courier delays).
+                  </li>
+                </ul>
               </div>
               <div className="box">
-                <h4>Your Account</h4>
-                <p>
-                  You are responsible for maintaining the confidentiality of
-                  your account and password information, and you agree to accept
-                  responsibility for all activities that occur under your
-                  account and password. This website and The Company Pte Ltd
-                  reserves the right to refuse service, terminate accounts
-                  remove or edit content or cancel orders.By placing an order,
-                  you warrant that you are over 18 years of age, and that you
-                  are providing shop.company.com or shop.beetle.com.sg with
-                  accurate, truthful information and that you have the authority
-                  to place the order.
-                </p>
+                <h4>7. User Accounts</h4>
+                <ul className="pp-list">
+                  <li>
+                    To place an order, you must create an account on our
+                    website.
+                  </li>
+                  <li>
+                    You are responsible for maintaining the confidentiality of
+                    your account credentials and for all activities that occur
+                    under your account.
+                  </li>
+                  <li>
+                    Notify us immediately if you suspect any unauthorized use of
+                    your account.
+                  </li>
+                </ul>
               </div>
               <div className="box">
-                <h4>Exchange and Refund Policy (Singapore Outlets Only)</h4>
-                <p>
-                  New, unused full-price merchandise purchased at store retail
-                  store may be exchange at any boutique with an original receipt
-                  within 7 days of purchase. After 7 days, the merchandise may
-                  not be exchanged.We offer a no-refund policy on all
-                  merchandises, however, for merchandise qualifying for an
-                  exchange, item may be exchange for store credits which may be
-                  used at our Singapore outlets only.Merchandise on sale may not
-                  be exchanged or returned. All merchandise must be returned in
-                  sellable condition, otherwise, an exchange would not be
-                  allowed.We reserve the right to reject any form of exchange
-                  without the original receipt.
-                </p>
+                <h4>Dispute Resolution</h4>
+                <ul className="pp-list">
+                  <li>
+                    In the event of a dispute, we will strive to resolve it
+                    amicably through negotiation or mediation.
+                  </li>
+                  <li>
+                    If the dispute cannot be resolved, it will be referred to
+                    the courts in Ernakulam, Kerala
+                  </li>
+                </ul>
               </div>
               <div className="box">
-                <h4>Exchange and Refund Policy (Online Shop)</h4>
-                <span>Electronic Communications</span>
+                <h4>9. Updates to Terms</h4>
+                <ul className="pp-list">
+                  <li>
+                    We reserve the right to update or modify these Terms and
+                    Conditions at any time. Any changes will be posted on this
+                    page with an updated effective date.
+                  </li>
+                  <li>
+                    Your continued use of the website after changes are made
+                    constitutes your acceptance of the revised terms.
+                  </li>
+                </ul>
+              </div>
+              <div className="box">
+                <h4>10. Contact Us</h4>
                 <p>
-                  When you visit this website and/or send email to us, you
-                  consent to receive electronic communications from us. You
-                  agree that all agreements, notices, disclosures and other
-                  communications that we sent you electronically satisfy any
-                  legal requirement that such communications be in writing
+                  If you have any questions or concerns about these Terms and
+                  Conditions, please contact us at:
                 </p>
-                <p>
-                  Exclusions of Warranties
-                  <br />
-                  The Company Private Limited makes no representative or
-                  warranty regarding the good working order or condition of this
-                  website, its suitability for use, or that its use will be
-                  uninterrupted or error-free. All information or material
-                  provided in this website to you â€œas isâ€ and without
-                  warranties of any kind, expressed or implied, including
-                  without limitation, warranties or conditions of
-                  merchantability, fitness, quality, durability or suitability
-                  for any particular purpose, or non-infringement.
+                <p style={{ fontSize: "1em", color: "#666", marginBottom: 20 }}>
+                  <b>Email:</b> sytrobags@gmail.com <br />
+                  <b>Phone:</b> +91 72933 33483 <br />
+                  <b>Address:</b> Panakal tower North Basin Road Broadway
+                  Ernakulam, Kochi, Kerala 682031
                 </p>
               </div>
             </div>
