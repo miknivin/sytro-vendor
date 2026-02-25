@@ -11,7 +11,6 @@ import DeliveryReturn from "@/components/modals/DeliveryReturn";
 import ChoiceImages from "@/components/modals/ChoiceImages";
 import Login from "@/components/modals/Login";
 import MobileMenu from "@/components/modals/MobileMenu";
-import Register from "@/components/modals/Register";
 import ResetPass from "@/components/modals/ResetPass";
 import SearchModal from "@/components/modals/SearchModal";
 import ToolbarBottom from "@/components/modals/ToolbarBottom";
@@ -53,7 +52,6 @@ export function ReduxConsumer({ children }) {
       {!isAuthenticated && (
         <>
           <Login />
-          <Register />
         </>
       )}
 

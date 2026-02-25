@@ -26,7 +26,7 @@ function redirectToLogin() {
   }
 
   const path = window.location.pathname;
-  const isAuthPage = path === "/login" || path === "/register";
+  const isAuthPage = path === "/login";
 
   if (!isAuthPage) {
     window.location.replace(`/login?next=${encodeURIComponent(path)}`);
@@ -82,18 +82,12 @@ export function AuthProvider({ children }) {
   );
 
   const register = useCallback(
-    async ({ name, email, password }) => {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ name, email, password }),
-      });
-      const data = await parseResponse(response);
-      await refreshUser();
-      return data;
+    async () => {
+      throw new Error(
+        "Self-registration is disabled. Please contact admin to create your account.",
+      );
     },
-    [refreshUser]
+    [],
   );
 
   const logout = useCallback(async () => {

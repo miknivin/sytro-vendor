@@ -5,23 +5,6 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
   endpoints: (builder) => ({
-    register: builder.mutation({
-      query(body) {
-        return {
-          url: "auth/register",
-          method: "POST",
-          body,
-        };
-      },
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          await dispatch(userApi.endpoints.getMe.initiate(null));
-        } catch (error) {
-          console.log(error);
-        }
-      },
-    }),
     googleSignIn: builder.mutation({
       query(body) {
         return {
@@ -94,7 +77,6 @@ export const authApi = createApi({
 
 export const {
   useLoginMutation,
-  useRegisterMutation,
   useLogoutMutation,
   useGoogleSignInMutation,
   useOtpLoginMutation,

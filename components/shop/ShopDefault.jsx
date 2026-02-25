@@ -54,7 +54,7 @@ export default function ShopDefault() {
     <>
       <section className="flat-spacing-2">
         <div className="container">
-          <div className="tf-shop-control grid-2 align-items-center">
+          <div className="tf-shop-control d-flex justify-content-between flex-wrap align-items-center">
             <div className="tf-control-filter">
               <a
                 href="#filterShop"
@@ -68,12 +68,12 @@ export default function ShopDefault() {
             </div>
             <div className="tf-control-layout d-flex justify-content-center">
               <div className="search-wrap">
-                <div className={`search-box ${focused ? "focused" : ""}`}>
+                <div style={{minWidth:"100%"}} className={`search-box ${focused ? "focused" : ""}`}>
                   <i className="icon icon-search search-icon" />
                   <input
                     ref={inputRef}
                     type="text"
-                    className="search-input"
+                    className="search-input w-100"
                     placeholder="Search..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}

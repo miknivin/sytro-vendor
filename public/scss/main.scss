@@ -203,7 +203,20 @@
 
 @media (min-width: 768px) and (max-width: 991px) {
   .my-account-nav {
-    flex-direction: row;
+    flex-direction: row !important;
+    align-items: stretch;
+    overflow-x: auto;
+    gap: 10px;
+  }
+}
+
+ .my-account-nav .my-account-nav-item{
+  white-space:nowrap;
+ }
+
+@media (max-width: 768px) {
+  .my-account-nav {
+    flex-direction: row !important;
     align-items: stretch;
     overflow-x: auto;
     gap: 10px;

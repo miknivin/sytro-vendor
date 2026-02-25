@@ -20,8 +20,9 @@ export default function Header2({
       <div className="px_15 lg-px_40">
         <div className="row wrapper-header align-items-center">
           <div className="col-md-4 col-3 tf-lg-hidden">
-            <a
+            {/* <a
               href="#mobileMenu"
+              className="text-white"
               data-bs-toggle="offcanvas"
               aria-controls="offcanvasLeft"
             >
@@ -37,7 +38,7 @@ export default function Header2({
                   fill="currentColor"
                 />
               </svg>
-            </a>
+            </a> */}
           </div>
           <div className="col-xl-3 col-md-4 col-6">
             <Link href={`/`} className="logo-header">

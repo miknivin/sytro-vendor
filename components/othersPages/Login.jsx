@@ -32,7 +32,7 @@ export default function Login() {
   return (
     <section className="flat-spacing-10">
       <div className="container">
-        <div className="tf-grid-layout lg-col-2 tf-login-wrap">
+        <div className="tf-grid-layout tf-login-wrap">
           <div className="tf-login-form">
             <div id="recover">
               <h5 className="mb_24">Reset your password</h5>
@@ -135,17 +135,7 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <div className="tf-login-content">
-            <h5 className="mb_36">I'm new here</h5>
-            <p className="mb_20">
-              Sign up for early Sale access plus tailored new arrivals, trends
-              and promotions. To opt out, click unsubscribe in our emails.
-            </p>
-            <Link href={`/register`} className="tf-btn btn-line">
-              Register
-              <i className="icon icon-arrow1-top-left" />
-            </Link>
-          </div>
+   
         </div>
       </div>
     </section>

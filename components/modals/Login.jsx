@@ -67,14 +67,9 @@ export default function Login() {
                   </button>
                 </div>
                 <div className="w-100">
-                  <a
-                    href="#register"
-                    data-bs-toggle="modal"
-                    className="btn-link fw-6 w-100 link"
-                  >
-                    New customer? Create your account
-                    <i className="icon icon-arrow1-top-left" />
-                  </a>
+                  <span className="btn-link fw-6 w-100 d-inline-block text-center">
+                    New account creation is handled by admin.
+                  </span>
                 </div>
               </div>
             </form>
