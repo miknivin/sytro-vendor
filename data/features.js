@@ -21,7 +21,7 @@ export const iconBoxData = [
   {
     iconClass: "icon-shipping",
     title: "Free Shipping",
-    description: "Free shipping over order $120",
+    description: "Free shipping over order ₹200",
   },
   {
     iconClass: "icon-payment fs-22",
@@ -30,28 +30,8 @@ export const iconBoxData = [
   },
   {
     iconClass: "icon-return fs-20",
-    title: "14 Day Returns",
-    description: "Within 30 days for an exchange",
-  },
-  {
-    iconClass: "icon-suport",
-    title: "Premium Support",
-    description: "Outstanding premium support",
-  },
-  {
-    iconClass: "icon-shipping",
-    title: "Free Shipping",
-    description: "Free shipping over order $120",
-  },
-  {
-    iconClass: "icon-payment fs-22",
-    title: "Flexible Payment",
-    description: "Pay with Multiple Credit Cards",
-  },
-  {
-    iconClass: "icon-return fs-20",
-    title: "14 Day Returns",
-    description: "Within 30 days for an exchange",
+    title: "2 Years Warranty",
+    description: "Guaranteed Quality, Long-Term Protection",
   },
   {
     iconClass: "icon-suport",
@@ -249,26 +229,26 @@ export const recentCollectionSlides = [
 export const iconBoxes4 = [
   {
     iconClass: "icon-materials",
-    title: "High-Quality Materials",
+    title: "Premium Materials",
     description:
-      "Crafted with precision and excellence, our activewear is meticulously engineered using premium materials to ensure unmatched comfort and durability.",
+      "We use only 275gsm coated polyester fabric with water-repellent properties, ensuring durability and protection.",
   },
   {
     iconClass: "icon-design",
-    title: "Laconic Design",
+    title: "Rigorous Testing",
     description:
-      "Simplicity refined. Our activewear embodies the essence of minimalistic design, delivering effortless style that speaks volumes.",
+      "Each product undergoes extensive quality checks before reaching our customers.",
   },
   {
     iconClass: "icon-sizes",
-    title: "Various Sizes",
+    title: "Sustainable Practices",
     description:
-      "Designed for every body and anyone, our activewear embraces diversity with a wide range of sizes and shapes, celebrating the beauty of individuality.",
+      "We prioritize eco-friendly manufacturing processes while maintaining our high-quality standards.",
   },
   {
     iconClass: "icon-design",
-    title: "Laconic Design",
+    title: "Uncompromising Quality",
     description:
-      "Simplicity refined. Our activewear embodies the essence of minimalistic design, delivering effortless style that speaks volumes.",
+      "Every product undergoes strict quality control measures to guarantee superior performance and customer satisfaction.",
   },
 ];

@@ -1,12 +1,11 @@
 import Footer1 from "@/components/footers/Footer1";
-import Header2 from "@/components/headers/Header2";
 import Faq1 from "@/components/othersPages/faq/Faq1";
 import Faq2 from "@/components/othersPages/faq/Faq2";
 import Faq3 from "@/components/othersPages/faq/Faq3";
 import React from "react";
 import Link from "next/link";
 import Faq4 from "@/components/othersPages/faq/Faq4";
-import Header4 from "@/components/headers/Header4";
+import Header2 from "@/components/headers/Header2";
 export const metadata = {
   title: "Faq || Sytro",
   description: "Sytro",
@@ -14,7 +13,7 @@ export const metadata = {
 export default function page() {
   return (
     <>
-      <Header4 />
+      <Header2 />
       <>
         <div className="tf-page-title style-2">
           <div className="container-full">

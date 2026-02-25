@@ -74,24 +74,88 @@ export const slides2 = [
 ];
 
 export const slides3 = [
+
+  //  {
+  //   imgSrc:
+  //     "https://ik.imagekit.io/c1jhxlxiy/rakhi.webp?updatedAt=1753879700160",
+  //   alt: "Rakhi offer",
+  //   link: "",
+  //   heading: "Engineered for the Urban Explorer",
+  //   subheading: "TRAVEL COLLECTION",
+  //   shortDescription:
+  //     "Showcasing premium travel bags that adapt to your journey",
+  // },
   {
-    imgSrc: "/images/slider/fashion-slideshow-07.jpg",
+    imgSrc:
+      "https://ik.imagekit.io/c1jhxlxiy/gym%20bag.jpg?updatedAt=1752560718222",
+    alt: "gym duffle bags",
+    link: "/shop-collection-sub/gym_duffle_bag",
+    heading: "Engineered for the Urban Explorer",
+    subheading: "TRAVEL COLLECTION",
+    shortDescription:
+      "Showcasing premium travel bags that adapt to your journey",
+  },
+
+  {
+    imgSrc:
+      "https://ik.imagekit.io/c1jhxlxiy/banner-backpack.jpg?updatedAt=1752560591447",
+    alt: "backpacks",
+    link: "/shop-collection-sub/laptop_backpack",
+    heading: "Engineered for the Urban Explorer",
+    subheading: "TRAVEL COLLECTION",
+    shortDescription:
+      "Showcasing premium travel bags that adapt to your journey",
+  },
+
+  {
+    imgSrc:
+      "https://ik.imagekit.io/c1jhxlxiy/ladies%20sling%20bag.webp?updatedAt=1752561777192",
+    alt: "womens_sling_bag",
+    link: "/shop-collection-sub/tote_bag",
+    heading: "Engineered for the Urban Explorer",
+    subheading: "TRAVEL COLLECTION",
+    shortDescription:
+      "Showcasing premium travel bags that adapt to your journey",
+  },
+  {
+    imgSrc:
+      "https://ik.imagekit.io/c1jhxlxiy/sgwe1phpuv5niwzej6cx.webp?updatedAt=1741438690756",
     alt: "fashion-slideshow",
-    heading: "Urban\n Street Style",
-    subheading: "HOT COLLECTION",
+    link: "/shop-collection-sub/Kids%20Bags",
+    heading: "Transform Your Child Into A Superhero",
+    subheading: "KIDS COLLECTION",
+    shortDescription:
+      "Featuring customized school bags with children's faces merged with superhero bodies",
   },
   {
-    imgSrc: "/images/slider/fashion-slideshow-08.jpg",
+    imgSrc:
+      "https://ik.imagekit.io/c1jhxlxiy/u1d3zm7uxlaihgeevavt.webp?updatedAt=1741438878940",
     alt: "fashion-slideshow-02",
-    heading: "The weather\n Style",
-    subheading: "NEW COLLECTION",
+    link: "/shop-collection-sub/Kids%20Bags",
+    heading: "Engineered for the Urban Explorer",
+    subheading: "TRAVEL COLLECTION",
+    shortDescription:
+      "Showcasing premium travel bags that adapt to your journey",
   },
-  {
-    imgSrc: "/images/slider/fashion-slideshow-09.jpg",
-    alt: "fashion-slideshow-03",
-    heading: "Mysterious\n Style",
-    subheading: "TREND COLLECTION",
-  },
+  // {
+  //   imgSrc:
+  //     "https://ik.imagekit.io/c1jhxlxiy/u1d3zm7uxlaihgeevavt.webp?updatedAt=1741438878940",
+  //   alt: "fashion-slideshow-02",
+  //   link: "/shop-collection-sub/Kids%20Bags",
+  //   heading: "Engineered for the Urban Explorer",
+  //   subheading: "TRAVEL COLLECTION",
+  //   shortDescription:
+  //     "Showcasing premium travel bags that adapt to your journey",
+  // },
+
+  // {
+  //   imgSrc:
+  //     "https://ik.imagekit.io/c1jhxlxiy/flipped_image.jpeg?updatedAt=1738347872430",
+  //   alt: "fashion-slideshow-03",
+  //   heading: "Elevate Your Professional Game",
+  //   subheading: "OFFICE COLLECTION",
+  //   shortDescription: "Highlighting executive office bags that mean business",
+  // },
 ];
 
 export const slideshowData = [

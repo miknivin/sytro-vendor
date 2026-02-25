@@ -28,23 +28,24 @@ export const collections = [
 
 export const slidesData = [
   {
-    imgSrc: "/images/collections/collection-27.jpg",
+    imgSrc:
+      "https://ik.imagekit.io/c1jhxlxiy/supershell.webp?updatedAt=1741619407000",
     alt: "collection-img",
-    title: "Modern Backpack",
-    price: "$199",
+    title: "Supershell Collection",
+    price: "₹890",
   },
-  {
-    imgSrc: "/images/collections/collection-28.jpg",
-    alt: "collection-img",
-    title: "Season Collection",
-    price: "$199",
-  },
-  {
-    imgSrc: "/images/collections/collection-26.jpg",
-    alt: "collection-img",
-    title: "Stradivarius top trainers",
-    price: "$199",
-  },
+  // {
+  //   imgSrc: "https://ik.imagekit.io/c1jhxlxiy/freepik__travel.jpg?updatedAt=1738348876251",
+  //   alt: "collection-img",
+  //   title: "Travel Collection",
+  //   price: "₹1999",
+  // },
+  // {
+  //   imgSrc: "https://ik.imagekit.io/c1jhxlxiy/freepik__pro__74306.jpg?updatedAt=1738349102521",
+  //   alt: "collection-img",
+  //   title: "Professional Collection",
+  //   price: "₹1199",
+  // },
 ];
 
 export const collectionData = [
