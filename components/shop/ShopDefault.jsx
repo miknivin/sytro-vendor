@@ -54,8 +54,8 @@ export default function ShopDefault() {
     <>
       <section className="flat-spacing-2">
         <div className="container">
-          <div className="tf-shop-control d-flex justify-content-between flex-wrap align-items-center">
-            <div className="tf-control-filter">
+          <div className="tf-shop-control d-flex justify-content-end flex-wrap align-items-center">
+            {/* <div className="tf-control-filter">
               <a
                 href="#filterShop"
                 data-bs-toggle="offcanvas"
@@ -65,7 +65,7 @@ export default function ShopDefault() {
                 <span className="icon icon-filter" />
                 <span className="text">Filter</span>
               </a>
-            </div>
+            </div> */}
             <div className="tf-control-layout d-flex justify-content-center">
               <div className="search-wrap">
                 <div style={{minWidth:"100%"}} className={`search-box ${focused ? "focused" : ""}`}>
