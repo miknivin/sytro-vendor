@@ -1,10 +1,15 @@
+"use client";
 import React from "react";
 import Nav from "./Nav";
 import Image from "next/image";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
+import { useSelector } from "react-redux";
+
 export default function Header1() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <header id="header" className="header-default header-absolute">
       <div className="px_15 lg-px_40">
@@ -69,13 +74,19 @@ export default function Header1() {
                 </a>
               </li>
               <li className="nav-account">
-                <a
-                  href="#login"
-                  data-bs-toggle="modal"
-                  className="nav-icon-item"
-                >
-                  <i className="icon icon-account" />
-                </a>
+                {isAuthenticated ? (
+                  <Link href="/my-account" className="nav-icon-item">
+                    <i className="icon icon-account" />
+                  </Link>
+                ) : (
+                  <a
+                    href="#login"
+                    data-bs-toggle="modal"
+                    className="nav-icon-item"
+                  >
+                    <i className="icon icon-account" />
+                  </a>
+                )}
               </li>
               <li className="nav-wishlist">
                 <Link href={`/wishlist`} className="nav-icon-item">

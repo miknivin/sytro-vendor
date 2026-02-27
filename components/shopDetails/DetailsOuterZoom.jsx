@@ -23,7 +23,7 @@ export default function DetailsOuterZoom({ product, details }) {
 
   const router = useRouter();
   const uploadModalRef = useRef(null);
-  const handleColor = () => {};
+  const handleColor = () => { };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [currentSize, setCurrentSize] = useState("Small");
   const selectedDesigns = useSelector((state) => state.cart.selectedDesigns);
@@ -183,22 +183,22 @@ export default function DetailsOuterZoom({ product, details }) {
                     firstImage={[
                       ...(selectedDesigns[product._id]
                         ? [
-                            {
-                              url:
-                                currentSize?.valueOf === "Large"
-                                  ? selectedDesigns[product._id]?.largeBagImage
-                                  : selectedDesigns[product._id]?.smallBagImage,
-                              _id: selectedDesigns?._id,
-                            },
-                            ...(currentSize?.valueOf === "Large"
-                              ? product?.extraImages?.slice(1) || []
-                              : product?.images?.slice(1) || []),
-                          ]
+                          {
+                            url:
+                              currentSize?.valueOf === "Large"
+                                ? selectedDesigns[product._id]?.largeBagImage
+                                : selectedDesigns[product._id]?.smallBagImage,
+                            _id: selectedDesigns?._id,
+                          },
+                          ...(currentSize?.valueOf === "Large"
+                            ? product?.extraImages?.slice(1) || []
+                            : product?.images?.slice(1) || []),
+                        ]
                         : [
-                            ...(currentSize?.valueOf === "Large"
-                              ? product?.extraImages || []
-                              : product?.images || []),
-                          ]),
+                          ...(currentSize?.valueOf === "Large"
+                            ? product?.extraImages || []
+                            : product?.images || []),
+                        ]),
                       ...(product.youtubeUrl || []).map((url) => ({ url })),
                     ]}
                   />
@@ -358,7 +358,7 @@ export default function DetailsOuterZoom({ product, details }) {
                   </div>
 
                   {/* Pricing Section */}
-                  <div className="tf-product-info-price d-flex align-items-center gap-3 mb-4">
+                  {/* <div className="tf-product-info-price d-flex align-items-center gap-3 mb-4">
                     <div
                       style={{
                         fontWeight: 700,
@@ -402,7 +402,7 @@ export default function DetailsOuterZoom({ product, details }) {
                     >
                       Inc. GST
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tf-product-info-variant-picker mb-0">
                     <div className="variant-picker-item"></div>
                     {/* Customization is now handled via the Order button and modal */}
@@ -431,10 +431,11 @@ export default function DetailsOuterZoom({ product, details }) {
                           data-bs-toggle="modal"
                           className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn mb-2"
                         >
-                          <span>Order now :{"  "}</span>
+                          <span>Order now</span>
+                          {/* :{"  "}
                           <span className="tf-qty-price">
                             {"   "}₹{(product.offer * quantity).toFixed(2)}
-                          </span>
+                          </span> */}
                         </a>
                       ) : !hasCustomDesign ? (
                         <>
@@ -457,12 +458,12 @@ export default function DetailsOuterZoom({ product, details }) {
                             <span>
                               {isAddedToCartProducts(product._id)
                                 ? "Already Added"
-                                : "Order now"}{" "}
-                              :{"  "}
+                                : "Order now"}
                             </span>
+                            {/* :{"  "}
                             <span className="tf-qty-price">
                               {"   "}₹{(product.offer * quantity).toFixed(2)}
-                            </span>
+                            </span> */}
                           </a>
                         </>
                       ) : (
@@ -477,12 +478,12 @@ export default function DetailsOuterZoom({ product, details }) {
                           <span>
                             {isAddedToCartProducts(product._id)
                               ? "Already Added"
-                              : "Order now"}{" "}
-                            :{"  "}
+                              : "Order now"}
                           </span>
+                          {/* :{"  "}
                           <span className="tf-qty-price">
                             {"   "}₹{(product.offer * quantity).toFixed(2)}
-                          </span>
+                          </span> */}
                         </a>
                       )}
                       <div className="w-100"></div>

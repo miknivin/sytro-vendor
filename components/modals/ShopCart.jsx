@@ -310,16 +310,14 @@ export default function ShopCart() {
       .promise(
         uploadPromise(),
         {
-          loading: `Uploading ${filesToUpload.length} image${
-            filesToUpload.length > 1 ? "s" : ""
-          }...`,
+          loading: `Uploading ${filesToUpload.length} image${filesToUpload.length > 1 ? "s" : ""
+            }...`,
           success: ({ newImageCount }) => {
             if (newImageCount > quantity) {
               return `Warning: Uploaded image count (${newImageCount}) exceeds quantity (${quantity}).`;
             } else if (newImageCount < quantity) {
-              return `Still need ${
-                quantity - newImageCount
-              } more images for product ${productId}.`;
+              return `Still need ${quantity - newImageCount
+                } more images for product ${productId}.`;
             }
             return "Uploaded image(s) successfully";
           },
@@ -457,12 +455,12 @@ export default function ShopCart() {
                           >
                             {elm.name}
                           </Link>
-                          <div className="price fw-6">
+                          {/* <div className="price fw-6">
                             ₹
                             {(Number(elm.price) * Number(elm.quantity)).toFixed(
                               2,
                             )}
-                          </div>
+                          </div> */}
                           {elm.category === "Kids Bags" && (
                             <>
                               <div className="popover-container">
@@ -523,9 +521,8 @@ export default function ShopCart() {
                                               >
                                                 <Image
                                                   src={url}
-                                                  alt={`Uploaded image ${
-                                                    index + 1
-                                                  } for ${elm.name}`}
+                                                  alt={`Uploaded image ${index + 1
+                                                    } for ${elm.name}`}
                                                   width={100}
                                                   height={100}
                                                   className="popover-image"
@@ -535,29 +532,29 @@ export default function ShopCart() {
                                                     height: "100%",
                                                   }}
                                                 />
-                                   
+
                                                 {imageUrls[elm.product].length >
                                                   1 && (
-                                                  <button
-                                                    style={{
-                                                      fontSize: "10px",
-                                                      left: "40%",
-                                                    }}
-                                                    onClick={() =>
-                                                      handleRemoveImage(
-                                                        elm.product,
-                                                        elm,
-                                                        index,
-                                                      )
-                                                    }
-                                                    className="position-absolute border-0 bg-opacity-75 text-white p-1 rounded-circle bottom-0 bg-danger"
-                                                  >
-                                                    <FontAwesomeIcon
-                                                      style={{ color: "white" }}
-                                                      icon={faTrash}
-                                                    />
-                                                  </button>
-                                                )}
+                                                    <button
+                                                      style={{
+                                                        fontSize: "10px",
+                                                        left: "40%",
+                                                      }}
+                                                      onClick={() =>
+                                                        handleRemoveImage(
+                                                          elm.product,
+                                                          elm,
+                                                          index,
+                                                        )
+                                                      }
+                                                      className="position-absolute border-0 bg-opacity-75 text-white p-1 rounded-circle bottom-0 bg-danger"
+                                                    >
+                                                      <FontAwesomeIcon
+                                                        style={{ color: "white" }}
+                                                        icon={faTrash}
+                                                      />
+                                                    </button>
+                                                  )}
                                               </SwiperSlide>
                                             ),
                                           )}
@@ -601,41 +598,41 @@ export default function ShopCart() {
                               {(elm.category === "Kids Bags"
                                 ? (imageUrls[elm.product]?.length || 0) === 0
                                 : imageUrls[elm.product]?.length !==
-                                  elm.quantity) && (
-                                <div className="upload-input-container">
-                                  {isLoading ? (
-                                    <div
-                                      className="spinner-border spinner-border-sm text-primary"
-                                      role="status"
-                                    >
-                                      <span className="visually-hidden">
-                                        Uploading...
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <input
-                                      type="file"
-                                      className="form-control form-control-sm"
-                                      accept="image/*"
-                                      multiple
-                                      ref={(el) => {
-                                        if (el)
-                                          fileInputRefs.current[elm.product] =
-                                            el;
-                                      }}
-                                      onChange={(e) =>
-                                        handleFileUpload(
-                                          e,
-                                          elm.product,
-                                          elm.quantity,
-                                          imageUrls[elm.product]?.length || 0,
-                                          elm.category,
-                                        )
-                                      }
-                                    />
-                                  )}
-                                </div>
-                              )}
+                                elm.quantity) && (
+                                  <div className="upload-input-container">
+                                    {isLoading ? (
+                                      <div
+                                        className="spinner-border spinner-border-sm text-primary"
+                                        role="status"
+                                      >
+                                        <span className="visually-hidden">
+                                          Uploading...
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <input
+                                        type="file"
+                                        className="form-control form-control-sm"
+                                        accept="image/*"
+                                        multiple
+                                        ref={(el) => {
+                                          if (el)
+                                            fileInputRefs.current[elm.product] =
+                                              el;
+                                        }}
+                                        onChange={(e) =>
+                                          handleFileUpload(
+                                            e,
+                                            elm.product,
+                                            elm.quantity,
+                                            imageUrls[elm.product]?.length || 0,
+                                            elm.category,
+                                          )
+                                        }
+                                      />
+                                    )}
+                                  </div>
+                                )}
                             </>
                           )}
                           {elm.category !== "custom_sling_bag" && (
@@ -743,12 +740,12 @@ export default function ShopCart() {
               </div>
               <div className="tf-mini-cart-bottom">
                 <div className="tf-mini-cart-bottom-wrap">
-                  <div className="tf-cart-totals-discounts">
+                  {/* <div className="tf-cart-totals-discounts">
                     <div className="tf-cart-total">Subtotal</div>
                     <div className="tf-totals-total-value fw-6">
                       ₹ {subtotal.toFixed(2)}
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tf-mini-cart-line" />
                   <div className="tf-cart-checkbox"></div>
                   <div

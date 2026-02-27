@@ -84,7 +84,7 @@ export const ProductCard = ({ product }) => {
         <Link href={`/product-detail/${productId}`} className="title link">
           {title}
         </Link>
-        <span className="price">${price.toFixed(2)}</span>
+{/* <span className="price">${price.toFixed(2)}</span> */}
         {displayColors.length > 0 && (
           <ul className="list-color-product">
             {displayColors.map((color) => (

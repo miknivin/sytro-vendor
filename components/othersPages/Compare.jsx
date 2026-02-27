@@ -52,11 +52,11 @@ export default function Compare() {
                     >
                       {elm.title}
                     </Link>
-                    <div className="price">
+                    {/* <div className="price">
                       <span className="price-on-sale">
                         ${elm.price.toFixed(2)}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="tf-compare-group-btns d-flex gap-10">
                       <a
                         href="#quick_view"

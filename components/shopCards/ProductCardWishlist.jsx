@@ -64,9 +64,8 @@ export const ProductCardWishlist = ({ product }) => {
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
-              className={`icon icon-heart ${
-                isAddedtoWishlist(product.id) ? "added" : ""
-              }`}
+              className={`icon icon-heart ${isAddedtoWishlist(product.id) ? "added" : ""
+                }`}
             />
             <span className="tooltip">
               {isAddedtoWishlist(product.id)
@@ -83,9 +82,8 @@ export const ProductCardWishlist = ({ product }) => {
             className="box-icon bg_white compare btn-icon-action"
           >
             <span
-              className={`icon icon-compare ${
-                isAddedtoCompareItem(product.id) ? "added" : ""
-              }`}
+              className={`icon icon-compare ${isAddedtoCompareItem(product.id) ? "added" : ""
+                }`}
             />
             <span className="tooltip">
               {" "}
@@ -124,14 +122,13 @@ export const ProductCardWishlist = ({ product }) => {
         <Link href={`/product-detail/${product.id}`} className="title link">
           {product.title}
         </Link>
-        <span className="price">${product.price.toFixed(2)}</span>
+        {/* <span className="price">${product.price.toFixed(2)}</span> */}
         {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (
               <li
-                className={`list-color-item color-swatch ${
-                  currentImage == color.imgSrc ? "active" : ""
-                } `}
+                className={`list-color-item color-swatch ${currentImage == color.imgSrc ? "active" : ""
+                  } `}
                 key={color.name}
                 onMouseOver={() => setCurrentImage(color.imgSrc)}
               >

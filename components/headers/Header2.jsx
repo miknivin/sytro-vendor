@@ -1,9 +1,12 @@
+"use client";
 import React from "react";
 import Nav from "./Nav";
 import Image from "next/image";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
+import { useSelector } from "react-redux";
+
 export default function Header2({
   textClass,
   bgColor = "",
@@ -11,6 +14,8 @@ export default function Header2({
   isArrow = true,
   Linkfs = "",
 }) {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <header
       id="header"
@@ -70,13 +75,19 @@ export default function Header2({
           <div className="col-xl-3 col-md-4 col-3">
             <ul className="nav-icon d-flex justify-content-end align-items-center gap-20">
               <li className="nav-account">
-                <a
-                  href="#login"
-                  data-bs-toggle="modal"
-                  className="nav-icon-item"
-                >
-                  <i className="icon icon-account text-white" />
-                </a>
+                {isAuthenticated ? (
+                  <Link href="/my-account" className="nav-icon-item">
+                    <i className="icon icon-account text-white" />
+                  </Link>
+                ) : (
+                  <a
+                    href="#login"
+                    data-bs-toggle="modal"
+                    className="nav-icon-item"
+                  >
+                    <i className="icon icon-account text-white" />
+                  </a>
+                )}
               </li>
 
               <li className="nav-cart">

@@ -131,10 +131,10 @@ export default function ProductSidebar() {
                         <a href="#" className="title link">
                           {product.title}
                         </a>
-                        <span className="price">
+                        {/* <span className="price">
                           {product.currency}
                           {product.price.toFixed(2)}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   ))}

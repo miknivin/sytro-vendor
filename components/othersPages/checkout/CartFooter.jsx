@@ -243,9 +243,9 @@ const CartFooter = ({
                             </p>
                           )}
                         </div>
-                        <span className="price">
+                        {/* <span className="price">
                           Rs.{(elm.price * elm.quantity).toFixed(2)}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
 
@@ -354,7 +354,7 @@ const CartFooter = ({
               </div>
             )}
 
-            <div className="d-flex flex-column">
+            {/* <div className="d-flex flex-column">
               {!appliedCoupon && (
                 <div className="coupon-box">
                   <input
@@ -395,9 +395,9 @@ const CartFooter = ({
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
 
-            <div className="order-summary">
+            {/* <div className="order-summary">
               <div className="d-flex justify-content-between line py-4">
                 <h6 className="fw-5">Subtotal</h6>
                 <h6 className="fw-5">Rs.{subtotal.toFixed(2)}</h6>
@@ -420,7 +420,7 @@ const CartFooter = ({
                 <h6 className="fw-5">Total</h6>
                 <h6 className="total fw-5">Rs.{finalTotalAmount.toFixed(2)}</h6>
               </div>
-            </div>
+            </div> */}
 
             {!isAuthenticated ? (
               <>
@@ -456,11 +456,10 @@ const CartFooter = ({
                 ref={buttonRef}
                 type="submit"
                 disabled={isAnyLoading || !isFormValid() || !cartItems.length}
-                className={`tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center ${
-                  isAnyLoading || !isFormValid() || !cartItems.length
-                    ? "disabled-btn"
-                    : ""
-                }`}
+                className={`tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center ${isAnyLoading || !isFormValid() || !cartItems.length
+                  ? "disabled-btn"
+                  : ""
+                  }`}
                 data-tooltip-id="cart-tooltip"
                 data-tooltip-content={
                   isAnyLoading

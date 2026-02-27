@@ -49,8 +49,8 @@ export default function Orders() {
       console.error("Invoice download failed:", err);
       toast.error(
         err?.data?.message ||
-          err?.message ||
-          "Could not download invoice. Please try again.",
+        err?.message ||
+        "Could not download invoice. Please try again.",
       );
     }
   };
@@ -88,7 +88,7 @@ export default function Orders() {
               <th className="fw-6">Order</th>
               <th className="fw-6">Date</th>
               <th className="fw-6">Status</th>
-              <th className="fw-6">Total</th>
+              {/* <th className="fw-6">Total</th> */}
               <th className="fw-6">Actions</th>
             </tr>
           </thead>
@@ -117,14 +117,14 @@ export default function Orders() {
 
                   <td>{order?.orderStatus || "—"}</td>
 
-                  <td>
+                  {/* <td>
                     ₹
                     {order?.totalAmount?.toLocaleString("en-IN") ||
                       order?.totalAmount ||
                       "—"}{" "}
                     for {order?.orderItems?.length || 0} item
                     {(order?.orderItems?.length ?? 0) !== 1 ? "s" : ""}
-                  </td>
+                  </td> */}
 
                   <td>
                     <div className="d-flex gap-3 flex-wrap">

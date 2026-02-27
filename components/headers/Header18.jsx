@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import { products44 } from "@/data/products";
+import { useSelector } from "react-redux";
 export default function Header18() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <header
       id="header"
@@ -74,7 +76,7 @@ export default function Header18() {
                             </div>
                             <div className="box-content">
                               <p className="title link">{product.title}</p>
-                              {product.hasOldPrice ? (
+                              {/* {product.hasOldPrice ? (
                                 <div className="d-flex gap-10">
                                   <span className="old-price">
                                     ${product.oldPrice.toFixed(2)}
@@ -87,7 +89,7 @@ export default function Header18() {
                                 <div className="price">
                                   ${product.price.toFixed(2)}
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </Link>
                         </li>
@@ -110,14 +112,24 @@ export default function Header18() {
                   </a>
                 </li>
                 <li className="nav-account">
-                  <a
-                    href="#login"
-                    data-bs-toggle="modal"
-                    className="nav-icon-item align-items-center gap-10"
-                  >
-                    <i className="icon icon-account" />
-                    <span className="text">Login</span>
-                  </a>
+                  {isAuthenticated ? (
+                    <Link
+                      href="/my-account"
+                      className="nav-icon-item align-items-center gap-10"
+                    >
+                      <i className="icon icon-account" />
+                      <span className="text">My Account</span>
+                    </Link>
+                  ) : (
+                    <a
+                      href="#login"
+                      data-bs-toggle="modal"
+                      className="nav-icon-item align-items-center gap-10"
+                    >
+                      <i className="icon icon-account" />
+                      <span className="text">Login</span>
+                    </a>
+                  )}
                 </li>
                 <li className="nav-compare">
                   <Link

@@ -72,7 +72,7 @@ export default function DefaultShopDetailsNoZoom({ product }) {
                       </p>
                     </div>
                   </div>
-                  <div className="tf-product-info-price">
+                  {/* <div className="tf-product-info-price">
                     <div className="price-on-sale">
                       ${product.price.toFixed(2)}
                     </div>
@@ -82,7 +82,7 @@ export default function DefaultShopDetailsNoZoom({ product }) {
                     <div className="badges-on-sale">
                       <span>20</span>% OFF
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tf-product-info-liveview">
                     <div className="liveview-count">20</div>
                     <p className="fw-6">People are viewing this right now</p>
@@ -190,20 +190,19 @@ export default function DefaultShopDetailsNoZoom({ product }) {
                           {isAddedToCartProducts(product.id)
                             ? "Already Added"
                             : "Add to cart"}{" "}
-                          -{" "}
                         </span>
+                        {/* -{" "}
                         <span className="tf-qty-price">
                           ${(product.price * quantity).toFixed(2)}
-                        </span>
+                        </span> */}
                       </a>
                       <a
                         onClick={() => addToWishlist(product.id)}
                         className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action"
                       >
                         <span
-                          className={`icon icon-heart ${
-                            isAddedtoWishlist(product.id) ? "added" : ""
-                          }`}
+                          className={`icon icon-heart ${isAddedtoWishlist(product.id) ? "added" : ""
+                            }`}
                         />
                         <span className="tooltip">
                           {" "}
@@ -221,9 +220,8 @@ export default function DefaultShopDetailsNoZoom({ product }) {
                         className="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action"
                       >
                         <span
-                          className={`icon icon-compare ${
-                            isAddedtoCompareItem(product.id) ? "added" : ""
-                          }`}
+                          className={`icon icon-compare ${isAddedtoCompareItem(product.id) ? "added" : ""
+                            }`}
                         />
                         <span className="tooltip">
                           {" "}

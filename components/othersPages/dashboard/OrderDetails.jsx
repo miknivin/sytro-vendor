@@ -96,7 +96,7 @@ export default function OrderDetails() {
     tabs();
     return () => {
       document.querySelectorAll(".widget-menu-tab .item-title").forEach((title) => {
-        title.removeEventListener("click", () => {});
+        title.removeEventListener("click", () => { });
       });
     };
   }, []);
@@ -282,10 +282,10 @@ export default function OrderDetails() {
                   </figure>
                   <div className="content">
                     <div className="text-2 fw-6">{item.name}</div>
-                    <div className="mt_4">
+                    {/* <div className="mt_4">
                       <span className="fw-6">Price: </span>₹{Number(item.price).toFixed(2)}
                       {item.quantity > 1 && ` × ${item.quantity}`}
-                    </div>
+                    </div> */}
                     {item.customNameToPrint && (
                       <div>
                         <span className="fw-6">Name on bag: </span>
@@ -308,7 +308,7 @@ export default function OrderDetails() {
               ))}
 
               {/* Pricing summary with discount */}
-              <ul className="mt-4">
+              {/* <ul className="mt-4">
                 <li className="d-flex justify-content-between text-2">
                   <span>Items Total</span>
                   <span>₹{itemsPrice.toFixed(2)}</span>
@@ -332,10 +332,10 @@ export default function OrderDetails() {
                   <span>Order Total</span>
                   <span>₹{totalAmount.toFixed(2)}</span>
                 </li>
-              </ul>
+              </ul> */}
 
               {/* Payment Info Section */}
-              {paymentMethod === "Partial-COD" && (
+              {/* {paymentMethod === "Partial-COD" && (
                 <div className="mt-5 pt-4 border-top">
                   <h6 className="fw-6 mb-3">Payment Information</h6>
                   <div className="d-flex justify-content-between mb-2">
@@ -357,9 +357,9 @@ export default function OrderDetails() {
                     {codChargeCollected > 0 && ` (including ₹${codChargeCollected.toFixed(0)} COD charge)`}.
                   </p>
                 </div>
-              )}
+              )} */}
 
-              {paymentMethod === "Online" && (
+              {/* {paymentMethod === "Online" && (
                 <div className="mt-5 pt-4 border-top">
                   <h6 className="fw-6 mb-3">Payment Information</h6>
                   <div className="d-flex justify-content-between mb-2">
@@ -367,9 +367,9 @@ export default function OrderDetails() {
                     <span className="fw-5">₹{totalAmount.toFixed(2)}</span>
                   </div>
                 </div>
-              )}
+              )} */}
 
-              {paymentMethod === "COD" && (
+              {/* {paymentMethod === "COD" && (
                 <div className="mt-5 pt-4 border-top">
                   <h6 className="fw-6 mb-3">Payment Information</h6>
                   <div className="d-flex justify-content-between mb-2 text-primary">
@@ -377,7 +377,7 @@ export default function OrderDetails() {
                     <span className="fw-5">₹{totalAmount.toFixed(2)}</span>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

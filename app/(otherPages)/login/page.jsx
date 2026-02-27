@@ -12,7 +12,6 @@ export default function page() {
   return (
     <RouteGuard guestOnly>
       <>
-        <Header2 />
         <div className="tf-page-title style-2">
           <div className="container-full">
             <div className="heading text-center">Log in</div>

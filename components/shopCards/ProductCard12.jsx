@@ -50,9 +50,8 @@ export default function ProductCard12({ product }) {
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
-              className={`icon icon-heart ${
-                isAddedtoWishlist(product.id) ? "added" : ""
-              }`}
+              className={`icon icon-heart ${isAddedtoWishlist(product.id) ? "added" : ""
+                }`}
             />
             <span className="tooltip">
               {isAddedtoWishlist(product.id)
@@ -69,9 +68,8 @@ export default function ProductCard12({ product }) {
             className="box-icon bg_white compare btn-icon-action"
           >
             <span
-              className={`icon icon-compare ${
-                isAddedtoCompareItem(product.id) ? "added" : ""
-              }`}
+              className={`icon icon-compare ${isAddedtoCompareItem(product.id) ? "added" : ""
+                }`}
             />
             <span className="tooltip">
               {" "}
@@ -99,19 +97,18 @@ export default function ProductCard12({ product }) {
         <Link href={`/product-detail/${product.id}`} className="title link">
           {product.title}
         </Link>
-        <span className="price">
+        {/* <span className="price">
           {product.oldPrice && (
             <span className="old-price">{product.oldPrice}</span>
           )}
           <span className="new-price">${product.price.toFixed(2)}</span>
-        </span>
+        </span> */}
         <ul className="list-color-product justify-content-center">
           {product.colors?.map((color, i) => (
             <li
               key={i}
-              className={`list-color-item color-swatch ${
-                currentImage == color.imgSrc ? "active" : ""
-              }  `}
+              className={`list-color-item color-swatch ${currentImage == color.imgSrc ? "active" : ""
+                }  `}
               onMouseOver={() => setCurrentImage(color.imgSrc)}
             >
               <span className="tooltip">{color.name}</span>

@@ -72,8 +72,8 @@ export default function QuickView() {
                     quickViewItem.isLookBookProduct
                       ? "/images/products/pink-1.jpg"
                       : quickViewItem.imgHoverSrc
-                      ? quickViewItem.imgHoverSrc
-                      : quickViewItem.imgSrc,
+                        ? quickViewItem.imgHoverSrc
+                        : quickViewItem.imgSrc,
                   ].map((product, index) => (
                     <SwiperSlide className="swiper-slide" key={index}>
                       <div className="item">
@@ -114,9 +114,9 @@ export default function QuickView() {
                     </p>
                   </div>
                 </div>
-                <div className="tf-product-info-price">
+                {/* <div className="tf-product-info-price">
                   <div className="price">${quickViewItem.price.toFixed(2)}</div>
-                </div>
+                </div> */}
                 <div className="tf-product-description">
                   <p>
                     Nunc arcu faucibus a et lorem eu a mauris adipiscing conubia
@@ -211,18 +211,17 @@ export default function QuickView() {
                           ? "Already Added - "
                           : "Add to cart - "}
                       </span>
-                      <span className="tf-qty-price">
+                      {/* <span className="tf-qty-price">
                         ${quickViewItem.price.toFixed(2)}
-                      </span>
+                      </span> */}
                     </a>
                     <a
                       onClick={() => addToWishlist(quickViewItem.id)}
                       className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action"
                     >
                       <span
-                        className={`icon icon-heart ${
-                          isAddedtoWishlist(quickViewItem.id) ? "added" : ""
-                        }`}
+                        className={`icon icon-heart ${isAddedtoWishlist(quickViewItem.id) ? "added" : ""
+                          }`}
                       />
                       <span className="tooltip">
                         {isAddedtoWishlist(quickViewItem.id)
@@ -239,9 +238,8 @@ export default function QuickView() {
                       className="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action"
                     >
                       <span
-                        className={`icon icon-compare ${
-                          isAddedtoCompareItem(quickViewItem.id) ? "added" : ""
-                        }`}
+                        className={`icon icon-compare ${isAddedtoCompareItem(quickViewItem.id) ? "added" : ""
+                          }`}
                       />
                       <span className="tooltip">
                         {" "}
