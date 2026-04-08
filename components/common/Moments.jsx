@@ -79,23 +79,35 @@ export default function Moments() {
               data-space={5}
               modules={[FreeMode, Pagination, Autoplay]}
               pagination={{ clickable: true, el: ".spd103" }}
+              watchSlidesProgress={true}
             >
               {data.data.flat().map((url, i) => (
                 <SwiperSlide key={i} className="swiper-slide">
-                  <div className="tf-video-box style-border-line text-center mx-auto position-relative">
-                    <video
-                      className="w-100 video-aspect-ratio object-fit-cover rounded-4"
-                      ref={(el) => (videoRefs.current[i] = el)}
-                      controls={playingVideos[i]}
-                      muted
-                      playsInline
-                      preload="metadata"
-                      onPlay={() => handleVideoPlay(i)}
-                      onPause={() => handleVideoPause(i)}
-                    >
-                      <source src={`${url}#t=0.001`} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                  {({ isVisible, isActive, isNext, isPrev }) => {
+                    const shouldLoad = isVisible || isActive || isNext || isPrev || playingVideos[i];
+                    return (
+                      <div className="tf-video-box style-border-line text-center mx-auto position-relative">
+                        {shouldLoad ? (
+                          <video
+                            className="w-100 video-aspect-ratio object-fit-cover rounded-4 bg-dark"
+                            style={{ backgroundColor: "#000" }}
+                            ref={(el) => (videoRefs.current[i] = el)}
+                            controls={playingVideos[i]}
+                            muted
+                            playsInline
+                            preload="metadata"
+                            onPlay={() => handleVideoPlay(i)}
+                            onPause={() => handleVideoPause(i)}
+                          >
+                            <source src={`${url}#t=0.001`} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : (
+                          <div
+                            className="w-100 video-aspect-ratio object-fit-cover rounded-4 bg-dark"
+                            style={{ backgroundColor: "#000" }}
+                          />
+                        )}
                     {!playingVideos[i] && (
                       <button
                         style={{
@@ -136,7 +148,10 @@ export default function Moments() {
                         </svg>
                       </button>
                     )}
+                  {/* play button */}
                   </div>
+                  );
+                }}
                 </SwiperSlide>
               ))}
             </Swiper>

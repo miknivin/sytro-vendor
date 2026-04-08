@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tunnel": "npx cloudflared tunnel --url http://localhost:3000"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.995.0",
@@ -48,6 +49,7 @@
     "yet-another-react-lightbox": "^3.29.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.11"
+    "@types/react": "^18.3.11",
+    "localtunnel": "^2.0.2"
   }
 }
