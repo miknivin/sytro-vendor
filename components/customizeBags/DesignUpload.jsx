@@ -34,13 +34,17 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
   const MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50 MB
   const MULTIPART_THRESHOLD = 5 * 1024 * 1024; // Changed from 2MB to 5MB
 
+  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/svg+xml", "image/webp", "application/pdf"];
+
+  const isPdf = (file) => file.type === "application/pdf";
+
   const handleFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     const totalFiles = files.length + selectedFiles.length;
 
     if (totalFiles > quantity) {
       setErrorMessage(
-        `You can only upload up to ${quantity} image${quantity > 1 ? "s" : ""}.`
+        `You can only upload up to ${quantity} file${quantity > 1 ? "s" : ""}.`
       );
       fileInputRef.current.value = null;
       return;
@@ -48,6 +52,12 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
 
     let totalSize = files.reduce((sum, file) => sum + file.size, 0);
     for (const file of selectedFiles) {
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setErrorMessage(`File "${file.name}" is not supported. Please upload JPG, PNG, SVG, or PDF.`);
+        toast.error(`Unsupported file type: ${file.name}`);
+        fileInputRef.current.value = null;
+        return;
+      }
       if (file.size > MAX_FILE_SIZE) {
         setErrorMessage(`File ${file.name} exceeds 25 MB limit.`);
         toast.error(`File ${file.name} exceeds 25 MB limit.`);
@@ -63,7 +73,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
     }
 
     const newPreviewUrls = selectedFiles.map((file) =>
-      URL.createObjectURL(file)
+      isPdf(file) ? null : URL.createObjectURL(file)
     );
     setFiles((prev) => [...prev, ...selectedFiles]);
     setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
@@ -73,7 +83,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
   const handleDelete = (index) => {
     const newFiles = files.filter((_, i) => i !== index);
     const newPreviewUrls = previewUrls.filter((_, i) => i !== index);
-    URL.revokeObjectURL(previewUrls[index]);
+    if (previewUrls[index]) URL.revokeObjectURL(previewUrls[index]);
     setFiles(newFiles);
     setPreviewUrls(newPreviewUrls);
   };
@@ -85,13 +95,17 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
 
     if (totalFiles > quantity) {
       setErrorMessage(
-        `You can only upload up to ${quantity} image${quantity > 1 ? "s" : ""}.`
+        `You can only upload up to ${quantity} file${quantity > 1 ? "s" : ""}.`
       );
       return;
     }
 
     let totalSize = files.reduce((sum, file) => sum + file.size, 0);
     for (const file of droppedFiles) {
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setErrorMessage(`File "${file.name}" is not supported. Please upload JPG, PNG, SVG, or PDF.`);
+        return;
+      }
       if (file.size > MAX_FILE_SIZE) {
         setErrorMessage(`File ${file.name} exceeds 25 MB limit.`);
         return;
@@ -104,7 +118,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
     }
 
     const newPreviewUrls = droppedFiles.map((file) =>
-      URL.createObjectURL(file)
+      isPdf(file) ? null : URL.createObjectURL(file)
     );
     setFiles((prev) => [...prev, ...droppedFiles]);
     setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
@@ -173,7 +187,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
       }
 
       onFileUpload(uploadedUrls);
-      previewUrls.forEach((url) => URL.revokeObjectURL(url));
+      previewUrls.forEach((url) => { if (url) URL.revokeObjectURL(url); });
       setPreviewUrls([]);
       setFiles([]);
       fileInputRef.current.value = null;
@@ -187,7 +201,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
   };
 
   const uploadMessage =
-    quantity === 1 ? "Add an image" : `Add up to ${quantity} images`;
+    quantity === 1 ? "Add an image or PDF" : `Add up to ${quantity} images/PDFs`;
 
   return (
     <form onSubmit={handleSubmit} className="w-100">
@@ -197,7 +211,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
           type="file"
           name="file"
           className="d-none"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/svg+xml,image/webp,application/pdf"
           multiple={quantity > 1}
           onChange={handleFileChange}
           ref={fileInputRef}
@@ -259,27 +273,44 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
                   {uploadMessage}
                 </span>
                 <span className="text-muted" style={{ fontSize: "11px" }}>
-                  SVG, PNG, JPG (Max 50MB)
+                  JPG, PNG, SVG, PDF (Max 25MB each)
                 </span>
               </div>
             </label>
           )}
 
-          {previewUrls.length > 0 && (
-            <div className="mt-2 d-flex justify-content-center">
-              {previewUrls.map((url, index) => (
+          {files.length > 0 && (
+            <div className="mt-2 d-flex flex-wrap justify-content-center gap-2">
+              {files.map((file, index) => (
                 <div
                   key={index}
                   className="position-relative"
                   style={{ width: "160px" }}
                 >
-                  <div className="rounded-3 overflow-hidden shadow-sm border border-dark" style={{ height: "160px" }}>
-                    <img
-                      src={url}
-                      alt={`Preview ${index + 1}`}
-                      className="w-100 h-100"
-                      style={{ objectFit: "cover" }}
-                    />
+                  <div
+                    className="rounded-3 overflow-hidden shadow-sm border border-dark d-flex align-items-center justify-content-center"
+                    style={{ height: "160px", backgroundColor: isPdf(file) ? "#f1f5f9" : "transparent" }}
+                  >
+                    {isPdf(file) ? (
+                      <div className="d-flex flex-column align-items-center justify-content-center gap-1 p-2 text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                          <polyline points="14 2 14 8 20 8"/>
+                          <line x1="16" y1="13" x2="8" y2="13"/>
+                          <line x1="16" y1="17" x2="8" y2="17"/>
+                          <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        <span className="fw-semibold" style={{ fontSize: "11px", color: "#e53e3e", wordBreak: "break-all" }}>PDF</span>
+                        <span className="text-muted" style={{ fontSize: "10px", wordBreak: "break-word", maxWidth: "130px" }}>{file.name}</span>
+                      </div>
+                    ) : (
+                      <img
+                        src={previewUrls[index]}
+                        alt={`Preview ${index + 1}`}
+                        className="w-100 h-100"
+                        style={{ objectFit: "cover" }}
+                      />
+                    )}
                   </div>
                   {uploadingIndices.includes(index) && (
                     <div
@@ -304,7 +335,7 @@ export default function DesignUpload({ onFileUpload, getPresignedUrls, children 
                       border: "2px solid #fff"
                     }}
                     onClick={() => handleDelete(index)}
-                    aria-label={`Remove image ${index + 1}`}
+                    aria-label={`Remove file ${index + 1}`}
                     disabled={uploadingIndices.includes(index)}
                   >
                     <FontAwesomeIcon icon={faTimes} />

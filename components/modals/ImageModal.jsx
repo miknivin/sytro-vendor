@@ -6,9 +6,44 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleChevronLeft,
   faCircleChevronRight,
+  faFilePdf,
+  faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
+
+const isPdfUrl = (url) =>
+  typeof url === "string" && (url.toLowerCase().endsWith(".pdf") || url.toLowerCase().includes(".pdf?"));
+
+const FileSlide = ({ url, label }) => {
+  if (isPdfUrl(url)) {
+    return (
+      <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-4">
+        <FontAwesomeIcon icon={faFilePdf} style={{ fontSize: "64px", color: "#e53e3e" }} />
+        <p className="fw-semibold mb-1" style={{ color: "#e53e3e" }}>PDF File</p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline-danger d-flex align-items-center gap-2"
+        >
+          <FontAwesomeIcon icon={faExternalLinkAlt} />
+          Open PDF
+        </a>
+      </div>
+    );
+  }
+  return (
+    <div className="d-flex justify-content-center">
+      <img
+        src={url}
+        alt={label || "Uploaded content"}
+        className="img-fluid"
+        style={{ maxHeight: "90vh" }}
+      />
+    </div>
+  );
+};
+
 const ImageModal = ({ isOpen, imageUrls, onClose }) => {
-  console.log(imageUrls, "modal");
   if (!isOpen || !imageUrls?.length) return null;
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -25,14 +60,7 @@ const ImageModal = ({ isOpen, imageUrls, onClose }) => {
         <div className="modal-content">
           <div className="modal-body p-4">
             {imageUrls.length === 1 ? (
-              <div className="d-flex justify-content-center">
-                <img
-                  src={imageUrls[0]}
-                  alt="Uploaded content"
-                  className="img-fluid"
-                  style={{ maxHeight: "90vh" }}
-                />
-              </div>
+              <FileSlide url={imageUrls[0]} label="Uploaded content" />
             ) : (
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -50,14 +78,7 @@ const ImageModal = ({ isOpen, imageUrls, onClose }) => {
               >
                 {imageUrls.map((url, index) => (
                   <SwiperSlide key={index}>
-                    <div className="d-flex justify-content-center">
-                      <img
-                        src={url}
-                        alt={`Uploaded content ${index + 1}`}
-                        className="img-fluid"
-                        style={{ maxHeight: "90vh" }}
-                      />
-                    </div>
+                    <FileSlide url={url} label={`Uploaded content ${index + 1}`} />
                   </SwiperSlide>
                 ))}
 
@@ -86,3 +107,4 @@ const ImageModal = ({ isOpen, imageUrls, onClose }) => {
 };
 
 export default ImageModal;
+

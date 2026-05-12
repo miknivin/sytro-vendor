@@ -519,10 +519,25 @@ export default function ShopCart() {
                                                 key={index}
                                                 className="position-relative"
                                               >
+                                              {url.toLowerCase().endsWith(".pdf") || url.toLowerCase().includes(".pdf?") ? (
+                                                <a
+                                                  href={url}
+                                                  target="_blank"
+                                                  rel="noopener noreferrer"
+                                                  className="d-flex flex-column align-items-center justify-content-center w-100 h-100 text-decoration-none"
+                                                  style={{ color: "#e53e3e" }}
+                                                  onClick={(e) => e.stopPropagation()}
+                                                >
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                                    <polyline points="14 2 14 8 20 8"/>
+                                                  </svg>
+                                                  <span style={{ fontSize: "9px", marginTop: "2px" }}>Open PDF</span>
+                                                </a>
+                                              ) : (
                                                 <Image
                                                   src={url}
-                                                  alt={`Uploaded image ${index + 1
-                                                    } for ${elm.name}`}
+                                                  alt={`Uploaded image ${index + 1} for ${elm.name}`}
                                                   width={100}
                                                   height={100}
                                                   className="popover-image"
@@ -532,6 +547,8 @@ export default function ShopCart() {
                                                     height: "100%",
                                                   }}
                                                 />
+                                              )}
+
 
                                                 {imageUrls[elm.product].length >
                                                   1 && (

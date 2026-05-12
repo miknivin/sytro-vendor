@@ -292,17 +292,45 @@ export default function OrderDetails() {
                         {item.customNameToPrint}
                       </div>
                     )}
-                    {item.uploadedImage?.length > 0 && (
-                      <div>
-                        <button
-                          style={{ textDecoration: "underline" }}
-                          onClick={() => openModal(item.uploadedImage)}
-                          className="fw-6 border-0 text-brand-primary bg-transparent"
-                        >
-                          View Uploaded Image
-                        </button>
-                      </div>
-                    )}
+                    {item.uploadedImage?.length > 0 && (() => {
+                      const isPdf = (url) =>
+                        typeof url === "string" &&
+                        (url.toLowerCase().endsWith(".pdf") || url.toLowerCase().includes(".pdf?"));
+                      const allPdfs = item.uploadedImage.every(isPdf);
+                      const hasPdf = item.uploadedImage.some(isPdf);
+                      return (
+                        <div className="d-flex flex-wrap gap-2 mt-1">
+                          {item.uploadedImage.map((url, idx) =>
+                            isPdf(url) ? (
+                              <a
+                                key={idx}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="d-inline-flex align-items-center gap-1 fw-6 text-danger"
+                                style={{ textDecoration: "underline", fontSize: "14px" }}
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                  <polyline points="14 2 14 8 20 8"/>
+                                </svg>
+                                Open PDF {item.uploadedImage.length > 1 ? idx + 1 : ""}
+                              </a>
+                            ) : null
+                          )}
+                          {item.uploadedImage.some((u) => !isPdf(u)) && (
+                            <button
+                              style={{ textDecoration: "underline" }}
+                              onClick={() => openModal(item.uploadedImage.filter((u) => !isPdf(u)))}
+                              className="fw-6 border-0 text-brand-primary bg-transparent"
+                            >
+                              View Uploaded Image{item.uploadedImage.filter((u) => !isPdf(u)).length > 1 ? "s" : ""}
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })()}
+
                   </div>
                 </div>
               ))}
